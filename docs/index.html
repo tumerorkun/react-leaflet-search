@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React-Leaflet examples</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
+    <style>
+      .simpleMap {
+        width: 100vw;
+        height: 100vh
+      }.leaflet-search-control {
+  width: auto;
+  height: auto;
+  text-align: center;
+  font: bold 12px/20px Tahoma, Verdana, sans-serif;
+  background-color: transparent;
+  cursor: default;
+  border-radius: 2px;
+  display: flex;
+  z-index: 802;
+}
+
+.leaflet-search-control-a {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0klEQVR4AWOgCTA2Ng4E4k4gngTEhUAsRaxGQyB+DcT/seBaQppNkRRfA+IiIE4G4pVI4pNxaWYE4ptQRdOwyNshGeKCzYBgqOQFPC4shqpZj01yOlSyCo8BYlA1b7FJzoNKZuExgA+q5is2yQyo5EY8BvhD1RzDJqmIFEheOAy4AZVPwGVDBZIhlUAsAsTc0Bi4iSQniy8tNOFIRH+B+BOUfR+IBfEZognES4H4JSjAgPg4EHtD5Y5DDXlOKHnjs+Ac1JBecg2QBCVpIBamSs4FABbBfro4ePMqAAAAAElFTkSuQmCC');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+  border:0!important;
+  height: 30px!important;
+  z-index: 0;
+  transition: height .1s linear 0s,
+  border-top-right-radius 0s linear .1s,
+  border-bottom-right-radius 0s linear .1s;
+}
+.leaflet-search-control-input {
+  z-index: 50;
+  outline: 0;
+  padding: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  font-size: 14px;
+  text-indent: 6px;
+  border: 0;
+  height: 30px;
+  box-sizing: border-box;
+  width: 0;
+  transition: width .1s linear 0s, height .1s linear 0s
+}
+.leaflet-search-control-close {
+  display: none;
+}
+.leaflet-search-close {
+  display: block;
+}
+
+.leaflet-search-control-active .leaflet-search-control-a {
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+  height: 40px!important;
+  transition: height .1s linear 0s;
+}
+
+.leaflet-search-control-active .leaflet-search-control-input {
+  padding:0px 0px;
+  height: 40px;
+  width: 240px;
+}
+.leaflet-search-control-active .leaflet-search-control-close {
+  background-color: transparent;
+  height: 40px;
+  width: 26px;
+  font: normal 18px/38px 'Lucida Console', Monaco, monospace;
+  right: 0;
+  color: gray;
+  cursor: pointer;
+  z-index: 51;
+  position: absolute;
+}
+
+.leaflet-search-control-info {
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  height: 35px;
+  top: 45px;
+  box-sizing: border-box;
+  padding: 3px 10px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.leaflet-search-control-info.close {
+  display: none;
+}
+
+.leaflet-search-control-info-span {
+  margin: 0 auto;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 29px;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="/bundle.js"></script>
+  </body>
+</html>
