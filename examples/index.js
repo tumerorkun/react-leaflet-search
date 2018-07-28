@@ -10,11 +10,11 @@ const render = () => {
 
 render()
 
-if (module.hot) {
-  module.hot.accept(['./components/app'], () =>
-    setImmediate(() => {
-      ReactDOM.unmountComponentAtNode(MOUNT_NODE)
-      render()
-    }),
-  )
-}
+// if (module.hot) {
+//   module.hot.accept(['./components/app'], () =>
+//     setImmediate(() => {
+//       ReactDOM.unmountComponentAtNode(MOUNT_NODE)
+//       render()
+//     }),
+//   )
+// }
