@@ -14,6 +14,10 @@
   ],
   "author": "Orkun Tumer",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tumerorkun/react-leaflet-search.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
