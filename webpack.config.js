@@ -70,6 +70,6 @@ module.exports = {
   },
   serve: {
     content: [__dirname],
-    port: 8000,
+    port: 8080,
   },
 }
