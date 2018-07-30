@@ -1,4 +1,4 @@
-import './css/react-leaflet-search.css'
+import './react-leaflet-search.css'
 import { Control, DomUtil, DomEvent } from 'leaflet'
 import React from 'react'
 import { Marker, Popup, MapControl } from 'react-leaflet'
@@ -48,7 +48,7 @@ export default class ReactLeafletSearch extends MapControl {
         this.input.setAttribute('placeholder', 'Search Lat,Lng')
         this.close.innerHTML = 'x'
         this.initEvents()
-        
+
         this.state = {
             search: this.props.search || false,
             info: false,

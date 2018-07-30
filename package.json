@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && webpack",
+    "babel": "babel src --out-dir lib && cp src/react-leaflet-search.css lib",
     "examples": "webpack-serve ./examples/webpack.config.js"
   },
   "keywords": [
@@ -14,6 +15,7 @@
   ],
   "author": "Orkun Tumer",
   "license": "MIT",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tumerorkun/react-leaflet-search.git"
