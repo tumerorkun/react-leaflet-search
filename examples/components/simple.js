@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Map, TileLayer} from 'react-leaflet'
-import ReactLeafletSearch from '../../src/React-Leaflet-Search';
+import { ReactLeafletSearch } from '../../';
 
 export default class SimpleExample extends Component {
 
@@ -30,7 +30,7 @@ export default class SimpleExample extends Component {
       ],
     }
   }
-  
+
   render() {
     return (
       <Map
