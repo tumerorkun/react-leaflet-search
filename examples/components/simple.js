@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Map, TileLayer} from 'react-leaflet'
-import { ReactLeafletSearch } from '../../';
+import { ReactLeafletSearch } from '../../src';
 
 export default class SimpleExample extends Component {
 
