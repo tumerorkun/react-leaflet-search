@@ -28,7 +28,7 @@ export default class ReactLeafletSearch extends MapControl {
         const popUpStructure = (
             <div>
                 <span>{ Array.isArray(info) ? info.toString() : info }</span>
-                <div style={{"width":"100%","height":"1px","background-color":"#eee"}}></div>
+                <div style={{"width":"100%","height":"1px","backgroundColor":"#eee"}}></div>
                 <span>{ `latitude: ${latLng[0]} - longitude: ${latLng[1]}` }</span>
             </div>
         )
