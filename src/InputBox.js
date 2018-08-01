@@ -37,17 +37,17 @@ export default class InputBox extends React.Component {
 
     async sendToAction(event) {
         if (!this.input.value.startsWith(":")) {
-            console.log(this.input.value, 'ASYNC', this);
+            // console.log(this.input.value, 'ASYNC', this);
             if (Object.prototype.hasOwnProperty.call(this.responseCache, this.input.value)) {
-                console.log('from cache');
+                // console.log('from cache');
                 this.showInfo(this.responseCache[this.input.value].info);
             } else {
                 if (this.input.value.length >= 3) {
-                    console.log('fetching');
+                    // console.log('fetching');
                     this.showInfo('Searching...')
                     const response = await this.provider.search(this.input.value);
                     if (response.error) { console.error(response.error); return false; }
-                    console.log(response);
+                    // console.log(response);
                     this.responseCache[this.input.value] = response;
                     this.showInfo(response.info);
                 }
@@ -61,7 +61,7 @@ export default class InputBox extends React.Component {
             this.state.closeButton && this.setState({ closeButton: false });
         }
         if (!this.input.value.startsWith(":")) {
-            console.log(this.input.value);
+            // console.log(this.input.value);
         }
     }
 
@@ -79,7 +79,7 @@ export default class InputBox extends React.Component {
     }
 
     beautifyValue(value) {
-        console.log(value);
+        // console.log(value);
         if (value.startsWith(":")) {
             const latLng = value
                 .slice(1)
@@ -144,7 +144,7 @@ export default class InputBox extends React.Component {
             const Provider = Providers.OpenStreetMap;
             this.provider = new Provider();
         }
-        console.log(this.provider)
+        // console.log(this.provider)
     }
 
     render() {

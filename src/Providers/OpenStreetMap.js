@@ -4,7 +4,7 @@ class OpenStreetMap {
   }
 
   async search(query) {
-    console.log(this.url + query)
+    // console.log(this.url + query)
     const response = await fetch(this.url + query)
       .then(res => res.json());
     return this.formatResponse(response)
