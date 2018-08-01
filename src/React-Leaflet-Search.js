@@ -27,9 +27,10 @@ export default class ReactLeafletSearch extends MapControl {
     latLngHandler(latLng, info) {
         const popUpStructure = (
             <div>
-                <span>{ Array.isArray(info) ? info.toString() : info }</span>
+                <p>{ Array.isArray(info) ? info.toString() : info }</p>
                 <div style={{"width":"100%","height":"1px","backgroundColor":"#eee"}}></div>
-                <span>{ `latitude: ${latLng[0]} - longitude: ${latLng[1]}` }</span>
+                <div>{`latitude: ${latLng[0]}`}</div>
+                <div>{`longitude: ${latLng[1]}`}</div>
             </div>
         )
         this.goToLatLng(latLng, popUpStructure);
@@ -42,11 +43,12 @@ export default class ReactLeafletSearch extends MapControl {
             this.flyTo();
         });
     }
-    flyTo() { this.context.map.flyTo([...this.state.search], this.props.zoom || 2); }
+    flyTo() { this.context.map.flyTo([...this.state.search], this.props.zoom || 10); }
 
     componentDidMount() {
         super.componentDidMount();
         ReactDOM.render(<InputBox
+            {...this.props}
             latLngHandler={this.latLngHandler.bind(this)}
             removeMarker={this.removeMarkerHandler.bind(this)} />, this.div);
     }

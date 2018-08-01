@@ -1,4 +1,5 @@
 import React from 'react'
+import Providers from './Providers'
 
 const asyncInputEvent = (asyncHandler, syncHandler) => {
     let t;
@@ -18,6 +19,7 @@ export default class InputBox extends React.Component {
             closeButton: false,
             info: false,
         };
+        this.provider = null;
         this.responseCache = {};
         this.inputEventHandler = asyncInputEvent(this.sendToAction.bind(this), this.syncInput.bind(this));
     }
@@ -38,16 +40,16 @@ export default class InputBox extends React.Component {
             console.log(this.input.value, 'ASYNC', this);
             if (Object.prototype.hasOwnProperty.call(this.responseCache, this.input.value)) {
                 console.log('from cache');
-                this.showInfo(this.responseCache[this.input.value]);
+                this.showInfo(this.responseCache[this.input.value].info);
             } else {
                 if (this.input.value.length >= 3) {
                     console.log('fetching');
                     this.showInfo('Searching...')
-                    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${this.input.value}&format=json`)
-                        .then(res => res.json());
+                    const response = await this.provider.search(this.input.value);
+                    if (response.error) { console.error(response.error); return false; }
                     console.log(response);
                     this.responseCache[this.input.value] = response;
-                    this.showInfo(response);
+                    this.showInfo(response.info);
                 }
             }
         }
@@ -102,20 +104,20 @@ export default class InputBox extends React.Component {
         this.info = '';
         this.setState({info: false});
     }
-    showInfo(info, activeItem) {
+    showInfo(info, activeIndex) {
         if (typeof info === 'string') {
             this.info = (<span className="leaflet-search-control-info-span">{info}</span>);
         }
-        if (Array.isArray(info)) {
+        if (typeof info === 'object') {
             this.info = (
                 <ul className="leaflet-search-control-info-ul">
                     {
                         info.map(
-                            e => (<li
-                                key={e.place_id}
-                                className={`leaflet-search-control-info-li${activeItem ? ((activeItem.place_id === e.place_id)?' active':''):''}`}
-                                onClick={this.lisItemClick.bind(this, e, info)} >
-                                <p>{e.display_name}</p>
+                            (e ,i) => (<li
+                                key={`${e.name}-${i}`}
+                                className={`leaflet-search-control-info-li${(typeof activeIndex !== 'undefined') ? ((activeIndex === i)?' active':''):''}`}
+                                onClick={this.lisItemClick.bind(this, e, info, i)} >
+                                <p>{e.name}</p>
                             </li>)
                         )
                     }
@@ -125,9 +127,24 @@ export default class InputBox extends React.Component {
         this.input.value && this.setState({info: true});
     }
 
-    lisItemClick(itemData, totalInfo, event) {
-        this.showInfo(totalInfo, itemData);
-        this.props.latLngHandler([Number(itemData.lat), Number(itemData.lon)], itemData.display_name);
+    lisItemClick(itemData, totalInfo, activeIndex, event) {
+        this.showInfo(totalInfo, activeIndex);
+        this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name);
+    }
+
+    componentDidMount() {
+        if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
+            const Provider = Providers[this.props.provider];
+            if (this.props.providerKey) {
+                this.provider = new Provider(this.props.providerKey);
+            } else {
+                this.provider = new Provider();
+            }
+        } else {
+            const Provider = Providers.OpenStreetMap;
+            this.provider = new Provider();
+        }
+        console.log(this.provider)
     }
 
     render() {

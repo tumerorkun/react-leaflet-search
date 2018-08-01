@@ -40,7 +40,12 @@ export default class SimpleExample extends Component {
           maxZoom={this.state.maxZoom}
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <ReactLeafletSearch position="topleft"/>
+        <ReactLeafletSearch
+          position="topleft"
+          // default provider OpenStreetMap
+          // provider="BingMap"
+          // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
+        />
       </Map>
     )
   }
