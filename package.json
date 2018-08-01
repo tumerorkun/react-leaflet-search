@@ -1,10 +1,10 @@
 {
   "name": "react-leaflet-search",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "React component for search lat lng on leaflet",
   "scripts": {
     "build": "rimraf dist && webpack",
-    "babel": "babel src --out-dir lib && cp src/react-leaflet-search.css lib",
+    "babel": "babel src --out-dir lib && cp src/react-leaflet-search.css lib && v-up patch",
     "examples": "webpack-serve ./examples/webpack.config.js",
     "npm:publish": "npm run babel && npm publish"
   },
@@ -21,6 +21,7 @@
     "url": "https://github.com/tumerorkun/react-leaflet-search.git"
   },
   "devDependencies": {
+    "@tumerorkun/v-up": "0.0.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -40,5 +41,6 @@
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-serve": "^2.0.2"
-  }
+  },
+  "dependencies": {}
 }

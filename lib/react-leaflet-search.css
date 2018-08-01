@@ -1,3 +1,6 @@
+.wrap {
+  z-index: 900;
+}
 .leaflet-search-control{
   width: auto;
   height: auto;
@@ -74,6 +77,7 @@
 
 .leaflet-search-control-info {
   width: 270px;
+  height: auto;
   position: absolute;
   background-color: white;
   top: 45px;
