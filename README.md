@@ -4,6 +4,8 @@ React component for search lat lng on leaflet
 
 ## Install
 
+don't forget to add stylesheet to your project you can find it in src or lib folder
+
 ```npm
 npm install react-leaflet-search
 ```
