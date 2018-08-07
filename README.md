@@ -1,6 +1,14 @@
 # react-leaflet-search
 React component for search lat lng on leaflet
 
+reacet-leaflet v1 and v2 are supported
+
+with v2 you should wrap this component with withLeaflet method
+```javascript
+const wrappedZoomIndicator = withLeaflet(ReactLeafletZoomIndicator)
+```
+and then use wrappedZoomIndicator component as child of Map component
+
 
 ## Install
 

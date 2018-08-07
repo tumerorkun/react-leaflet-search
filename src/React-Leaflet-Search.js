@@ -7,13 +7,14 @@ import ExtendedMarker from './ExtendedMarker';
 import InputBox from './InputBox';
 
 export default class ReactLeafletSearch extends MapControl {
-    constructor(props){
+    constructor(props, context){
         super(props);
         this.div = DomUtil.create('div', 'wrap');
         this.state = {
-            search: this.props.search || false,
+            search: props.search || false,
             info: false,
         };
+        this.map = context.map || props.leaflet.map;
     }
 
     createLeafletElement(props) {
@@ -43,7 +44,7 @@ export default class ReactLeafletSearch extends MapControl {
             this.flyTo();
         });
     }
-    flyTo() { this.context.map.flyTo([...this.state.search], this.props.zoom || 10); }
+    flyTo() { this.map.flyTo([...this.state.search], this.props.zoom || 10); }
 
     componentDidMount() {
         super.componentDidMount();
