@@ -1,5 +1,5 @@
 import './react-leaflet-search.css';
-import { Control, DomUtil } from 'leaflet';
+import { Control, DomUtil, icon } from 'leaflet';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Popup, MapControl, Marker } from 'react-leaflet';
@@ -13,6 +13,16 @@ export default class ReactLeafletSearch extends MapControl {
             search: props.search || false,
             info: false,
         };
+        this.markerIcon = icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
+            iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41]
+        })
         this.map = context.map || props.leaflet.map;
     }
 
@@ -61,6 +71,7 @@ export default class ReactLeafletSearch extends MapControl {
         return this.state.search ? (
             <Marker
                 ref={ref => (this.markerRef = ref)}
+                icon={ this.props.markerIcon || this.markerIcon }
                 key={`marker-search-${this.state.search.toString()}`}
                 position={[...this.state.search]}>
                 <Popup>

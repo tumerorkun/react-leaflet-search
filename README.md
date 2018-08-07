@@ -25,17 +25,37 @@ import { ReactLeafletSearch } from 'react-leaflet-search'
 
 this component should be a child to react-leaflet's map component:
 ```javascript
-<ReactLeafletSearch position="topleft" />
+const searchComponent = props => (
+  <ReactLeafletSearch position="topleft" />
+)
 ```
 
 default provider is OpenStreetMap if you wnat to use BingMap as a provider you should use like this:
 ```javascript
-<ReactLeafletSearch
-          position="topleft"
-          provider="BingMap"
-          providerKey="{BINGMAP_KEY}" />
+const searchComponent = props => (
+  <ReactLeafletSearch
+            position="topleft"
+            provider="BingMap"
+            providerKey="{BINGMAP_KEY}" />
+)
 ```
 for now react-leaflet-search has two provider but more will be added.
+
+to change marker icon use markerIcon prop:
+```javascript
+const myIcon = L.icon({
+    iconUrl: 'marker-icon.png',
+    iconRetinaUrl: 'marker-icon-2x.png',
+    shadowUrl: 'marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+});
+
+<ReactLeafletSearch position="topleft" markerIcon={ myIcon }/>
+```
 
 ## Info about search input
 it has two modes:
