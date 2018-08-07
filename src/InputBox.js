@@ -144,7 +144,15 @@ export default class InputBox extends React.Component {
             const Provider = Providers.OpenStreetMap;
             this.provider = new Provider();
         }
-        // console.log(this.provider)
+        if (this.props.search &&
+            Array.isArray(this.props.search) &&
+            !isNaN(Number(this.props.search[0])) &&
+            !isNaN(Number(this.props.search[1]))
+        ) {
+            this.input.value = `:${this.props.search.toString()}`;
+            this.openSearch();
+            this.props.latLngHandler([Number(this.props.search[0]), Number(this.props.search[1])], this.props.search.toString())
+        }
     }
 
     render() {

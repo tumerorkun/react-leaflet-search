@@ -10,7 +10,7 @@ export default class ReactLeafletSearch extends MapControl {
         super(props);
         this.div = DomUtil.create('div', 'wrap');
         this.state = {
-            search: props.search || false,
+            search: false,
             info: false,
         };
         this.markerIcon = icon({

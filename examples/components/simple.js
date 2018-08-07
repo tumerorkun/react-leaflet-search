@@ -42,6 +42,7 @@ export default class SimpleExample extends Component {
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
           position="topleft"
+          search={[56,7]}
           // default provider OpenStreetMap
           // provider="BingMap"
           // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
