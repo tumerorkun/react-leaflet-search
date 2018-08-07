@@ -2,8 +2,7 @@ import './react-leaflet-search.css';
 import { Control, DomUtil } from 'leaflet';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Popup, MapControl } from 'react-leaflet';
-import ExtendedMarker from './ExtendedMarker';
+import { Popup, MapControl, Marker } from 'react-leaflet';
 import InputBox from './InputBox';
 
 export default class ReactLeafletSearch extends MapControl {
@@ -54,15 +53,20 @@ export default class ReactLeafletSearch extends MapControl {
             removeMarker={this.removeMarkerHandler.bind(this)} />, this.div);
     }
 
+    componentDidUpdate() {
+        this.markerRef.leafletElement.openPopup();
+    }
+
     render() {
         return this.state.search ? (
-            <ExtendedMarker
+            <Marker
+                ref={ref => (this.markerRef = ref)}
                 key={`marker-search-${this.state.search.toString()}`}
                 position={[...this.state.search]}>
                 <Popup>
                     <span>{this.state.info}</span>
                 </Popup>
-            </ExtendedMarker>
+            </Marker>
         ) : null;
     }
 }
