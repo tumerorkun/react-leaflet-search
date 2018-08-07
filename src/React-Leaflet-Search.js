@@ -64,10 +64,11 @@ export default class ReactLeafletSearch extends MapControl {
     }
 
     componentDidUpdate() {
-        this.markerRef.leafletElement || this.markerRef.leafletElement.openPopup();
+        this.markerRef && this.markerRef.leafletElement.openPopup();
     }
 
     render() {
+        this.markerRef = false;
         return this.state.search ? (
             <Marker
                 ref={ref => (this.markerRef = ref)}
