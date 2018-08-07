@@ -64,7 +64,7 @@ export default class ReactLeafletSearch extends MapControl {
     }
 
     componentDidUpdate() {
-        this.markerRef.leafletElement.openPopup();
+        this.markerRef.leafletElement || this.markerRef.leafletElement.openPopup();
     }
 
     render() {
