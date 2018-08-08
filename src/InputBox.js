@@ -132,7 +132,15 @@ export default class InputBox extends React.Component {
         this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name);
     }
 
+    setMaxHeight() {
+        const containerRect = this.props.map.getContainer().getBoundingClientRect();
+        const divRect = this.div.getBoundingClientRect();
+        const maxHeight = `${Math.floor((containerRect.bottom - divRect.y) * 0.95)}px`
+        this.div.style.maxHeight = maxHeight;
+    }
+
     componentDidMount() {
+        this.setMaxHeight();
         if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
             const Provider = Providers[this.props.provider];
             if (this.props.providerKey) {
@@ -180,6 +188,7 @@ export default class InputBox extends React.Component {
                     className={`leaflet-search-control-close${this.state.closeButton?' leaflet-search-close':''}`}
                     onClick={this.closeClick.bind(this)}>x</div>
                 <div
+                    ref={ref=>(this.div=ref)}
                     className={`leaflet-search-control-info${this.state.info ? '': ' close'}`}>
                     { (this.state.info) && this.info }
                 </div>

@@ -1,4 +1,4 @@
-.wrap {
+.leaflet-search-wrap {
   z-index: 900;
 }
 .leaflet-search-control{
@@ -86,6 +86,7 @@
   border: 2px solid rgba(166, 0, 0, 0.2);
   border-radius: 2px;
   text-align: center;
+  overflow-y: auto;
 }
 
 .leaflet-search-control-info.close {
@@ -101,7 +102,6 @@
 .leaflet-search-control-info-ul {
   margin: 0;
   padding: 0;
-  max-height: 70vh;
   overflow-y: auto;
 }
 .leaflet-search-control-info-li {

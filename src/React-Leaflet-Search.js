@@ -8,7 +8,7 @@ import InputBox from './InputBox';
 export default class ReactLeafletSearch extends MapControl {
     constructor(props, context){
         super(props);
-        this.div = DomUtil.create('div', 'wrap');
+        this.div = DomUtil.create('div', 'leaflet-search-wrap');
         this.state = {
             search: false,
             info: false,
@@ -59,6 +59,7 @@ export default class ReactLeafletSearch extends MapControl {
         super.componentDidMount();
         ReactDOM.render(<InputBox
             {...this.props}
+            map={this.map}
             latLngHandler={this.latLngHandler.bind(this)}
             removeMarker={this.removeMarkerHandler.bind(this)} />, this.div);
     }
