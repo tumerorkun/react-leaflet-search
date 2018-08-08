@@ -188,6 +188,7 @@ export default class InputBox extends React.Component {
                     className={`leaflet-search-control-close${this.state.closeButton?' leaflet-search-close':''}`}
                     onClick={this.closeClick.bind(this)}>x</div>
                 <div
+                    ref={ref => (this.div=ref)}
                     className={`leaflet-search-control-info${this.state.info ? '': ' close'}`}>
                     { (this.state.info) && this.info }
                 </div>
