@@ -134,8 +134,8 @@ export default class InputBox extends React.Component {
 
     setMaxHeight() {
         const containerRect = this.props.map.getContainer().getBoundingClientRect();
-        const divRect = this.div.getBoundingClientRect();
-        const maxHeight = `${Math.floor((containerRect.bottom - divRect.y) * 0.95)}px`
+        const divRect = this.input.getBoundingClientRect();
+        const maxHeight = `${Math.floor((containerRect.bottom - divRect.bottom - 10) * 0.95)}px`
         this.div.style.maxHeight = maxHeight;
     }
 
@@ -188,7 +188,6 @@ export default class InputBox extends React.Component {
                     className={`leaflet-search-control-close${this.state.closeButton?' leaflet-search-close':''}`}
                     onClick={this.closeClick.bind(this)}>x</div>
                 <div
-                    ref={ref=>(this.div=ref)}
                     className={`leaflet-search-control-info${this.state.info ? '': ' close'}`}>
                     { (this.state.info) && this.info }
                 </div>
