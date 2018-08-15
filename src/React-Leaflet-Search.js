@@ -1,6 +1,7 @@
 import './react-leaflet-search.css';
 import { Control, DomUtil, icon } from 'leaflet';
 import React from 'react';
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 import { Popup, MapControl, Marker } from 'react-leaflet';
 import InputBox from './InputBox';
@@ -38,7 +39,7 @@ export default class ReactLeafletSearch extends MapControl {
         const popUpStructure = (
             <div>
                 <p>{ Array.isArray(info) ? info.toString() : info }</p>
-                <div style={{"width":"100%","height":"1px","backgroundColor":"#eee"}}></div>
+                <div className='leaflet-search-popup'></div>
                 <div>{`latitude: ${latLng[0]}`}</div>
                 <div>{`longitude: ${latLng[1]}`}</div>
             </div>
@@ -68,18 +69,44 @@ export default class ReactLeafletSearch extends MapControl {
         this.markerRef && this.markerRef.leafletElement.openPopup();
     }
 
+    defaultPopUp() {
+      return(
+        <Popup>
+            <span>{this.state.info}</span>
+        </Popup>
+      );
+    }
+
     render() {
         this.markerRef = false;
-        return this.state.search ? (
+        return this.state.search && this.props.showMarker ? (
             <Marker
                 ref={ref => (this.markerRef = ref)}
                 icon={ this.props.markerIcon || this.markerIcon }
                 key={`marker-search-${this.state.search.toString()}`}
                 position={[...this.state.search]}>
-                <Popup>
-                    <span>{this.state.info}</span>
-                </Popup>
+                {
+                  this.props.showPopup && (
+                    this.props.popUp ? this.props.popUp() : this.defaultPopUp()
+                  )
+                }
             </Marker>
         ) : null;
     }
+}
+
+ReactLeafletSearch.propTypes = {
+  position: PropTypes.string.isRequired,
+  provider: PropTypes.string,
+  providerKey: PropTypes.string,
+  inputPlaceholder: PropTypes.string,
+  showMarker: PropTypes.bool,
+  showPopup: PropTypes.bool,
+  popUp: PropTypes.func,
+}
+
+ReactLeafletSearch.defaultProps = {
+  inputPlaceholder: "Search Lat,Lng",
+  showMarker: true,
+  showPopup: false,
 }
