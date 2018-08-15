@@ -5,6 +5,9 @@ export interface ReactLeafletSearchProps extends MapControlProps {
   zoom?: number;
   search?: [number, number];
   icon?: Icon;
+  provider?: string;
+  providerKey?: string;
+  markerIcon?: Icon;
   leaflet?: {
     map?: Map;
     pane?: string;
