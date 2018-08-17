@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Map, TileLayer} from 'react-leaflet'
-import { ReactLeafletSearch } from '../../src';
+import {Map, TileLayer, Popup} from 'react-leaflet'
+import { ReactLeafletSearch } from '../../src'
 
 export default class SimpleExample extends Component {
 
@@ -31,6 +31,14 @@ export default class SimpleExample extends Component {
     }
   }
 
+  customPopup() {
+    return(
+      <Popup>
+        <span>I am a custom popup</span>
+      </Popup>
+    );
+  }
+
   render() {
     return (
       <Map
@@ -41,8 +49,13 @@ export default class SimpleExample extends Component {
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
-          position="topleft"
+          position="topright"
           search={[56,7]}
+          inputPlaceholder="Custom placeholder"
+          showMarker={true}
+          showPopup={true}
+          popUp={this.customPopup}
+
           // default provider OpenStreetMap
           // provider="BingMap"
           // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"

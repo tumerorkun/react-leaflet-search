@@ -1,36 +1,37 @@
 # react-leaflet-search
-React component for search lat lng on leaflet
+A React component for searching places or global coordinates on leaflet
 
-reacet-leaflet v1 and v2 are supported
+Both react-leaflet v1 and v2 are supported.
 
-with v2 you should wrap this component with withLeaflet method
+With v2 you should wrap this component in the withLeaflet method
 ```javascript
 const wrappedZoomIndicator = withLeaflet(ReactLeafletZoomIndicator)
 ```
-and then use wrappedZoomIndicator component as child of Map component
+and then use a wrappedZoomIndicator component as child of the Map component.
 
 
 ## Install
 
-don't forget to add stylesheet to your project you can find it in src or lib folder
-
 ```npm
 npm install react-leaflet-search
 ```
+
+Don't forget to add the stylesheet to your project. It can be found in both the src/ and lib/ folders
+
 
 ## Usage
 ```javascript
 import { ReactLeafletSearch } from 'react-leaflet-search'
 ```
 
-this component should be a child to react-leaflet's map component:
+This component should be a child to react-leaflet's map component:
 ```javascript
 const searchComponent = props => (
   <ReactLeafletSearch position="topleft" />
 )
 ```
 
-default provider is OpenStreetMap if you wnat to use BingMap as a provider you should use like this:
+The default provider is OpenStreetMap. If you want to use BingMap as a provider, it can be done as follows:
 ```javascript
 const searchComponent = props => (
   <ReactLeafletSearch
@@ -39,9 +40,9 @@ const searchComponent = props => (
             providerKey="{BINGMAP_KEY}" />
 )
 ```
-for now react-leaflet-search has two provider but more will be added.
+For now, react-leaflet-search only has two providers, but more will be added in the future.
 
-to change marker icon use markerIcon prop:
+To change the marker icon, use the markerIcon prop:
 ```javascript
 const myIcon = L.icon({
     iconUrl: 'marker-icon.png',
@@ -57,14 +58,40 @@ const myIcon = L.icon({
 <ReactLeafletSearch position="topleft" markerIcon={ myIcon }/>
 ```
 
+To change the Popup displayed by the marker, use the popUp prop:
+
+```javascript
+myPopup() {
+  return(
+    <Popup>
+      <span>I am a custom popup</span>
+    </Popup>
+  );
+}
+
+<ReactLeafletSearch position="topleft" popUp={ myPopup }/>
+```
+
+Other aspects can be customized as well:
+
+```javascript
+<ReactLeafletSearch
+  position="topright"
+  inputPlaceholder="The default text in the search bar"
+  showMarker={true}
+  showPopup={false}
+/>
+```
+
+
 ## Info about search input
-it has two modes:
-- search only latitude,longitude as numbers
-- search place with its name, city, country, street etc...
+It has two modes:
+- Search for latitude,longitude as numbers
+- Search for a place with its name, city, country, street etc.
 
-to search with latitude, longitude search input should start with ':' character and should respect the following format: ":{LATITUDE},{LONGITUDE}"
+To search with global coordinates, the search input should start with the ':' character and should respect the following format: `:{LATITUDE},{LONGITUDE}`
 
 
-### you can play with the demo
+### You can play with the demo
 
 [DEMO](https://tumerorkun.github.io/react-leaflet-search)
