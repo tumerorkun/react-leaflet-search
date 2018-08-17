@@ -10,7 +10,7 @@ export interface ReactLeafletSearchProps extends MapControlProps {
   markerIcon?: Icon;
   showPopup?: boolean;
   showMarker?: boolean;
-  popUp?: (SearchInfo: string) => Popup;
+  popUp?: (SearchInfo: string) => Element;
   leaflet?: {
     map?: Map;
     pane?: string;
