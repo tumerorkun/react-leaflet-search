@@ -159,6 +159,7 @@ export default class InputBox extends React.Component {
         ) {
             this.input.value = `:${this.props.search.toString()}`;
             this.openSearch();
+            this.syncInput(); // to show close button
             this.props.latLngHandler([Number(this.props.search[0]), Number(this.props.search[1])], this.props.search.toString())
         }
     }
