@@ -1,6 +1,6 @@
 {
   "name": "react-leaflet-search",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "React component for search lat lng on leaflet",
   "scripts": {
     "build": "rimraf dist && webpack",

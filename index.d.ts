@@ -1,5 +1,5 @@
 import { Control, Layer, Icon } from 'leaflet'
-import { LayerContainer, Map, MapControl, MapControlProps, Popup } from "react-leaflet";
+import { LayerContainer, Map, MapControl, MapControlProps } from "react-leaflet";
 
 export interface ReactLeafletSearchProps extends MapControlProps {
   zoom?: number;
@@ -10,7 +10,7 @@ export interface ReactLeafletSearchProps extends MapControlProps {
   markerIcon?: Icon;
   showPopup?: boolean;
   showMarker?: boolean;
-  popUp?: (SearchInfo: string) => Element;
+  popUp?: (SearchInfo: string) => JSX.Element;
   leaflet?: {
     map?: Map;
     pane?: string;
