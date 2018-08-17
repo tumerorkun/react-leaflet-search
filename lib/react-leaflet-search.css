@@ -140,3 +140,9 @@
   margin: 0;
   /* padding: 13 0px; */
 }
+
+.leaflet-search-popup {
+  width: 100%;
+  height: 1px;
+  background-color: #eee;
+}

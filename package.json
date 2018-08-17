@@ -4,7 +4,7 @@
   "description": "React component for search lat lng on leaflet",
   "scripts": {
     "build": "rimraf dist && webpack",
-    "babel": "babel src --out-dir lib && cp src/*.css lib && v-up patch",
+    "babel": "babel src --out-dir lib && cp src/*.css lib",
     "examples": "webpack-serve ./examples/webpack.config.js",
     "npm:publish": "npm run babel && npm publish"
   },
