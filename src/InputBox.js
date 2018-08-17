@@ -176,7 +176,7 @@ export default class InputBox extends React.Component {
                 <input
                     ref={ref => (this.input = ref)}
                     className="leaflet-search-control-input leaflet-search-input"
-                    placeholder="Search Lat,Lng"
+                    placeholder={this.props.inputPlaceholder}
                     onClick={this.inputClick.bind(this)}
                     // onMouseDown={this.inputMouseDown.bind(this)}
                     onMouseEnter={this.inputMouseEnter.bind(this)}
