@@ -1,13 +1,16 @@
 import { Control, Layer, Icon } from 'leaflet'
-import { LayerContainer, Map, MapControl, MapControlProps } from "react-leaflet";
+import { LayerContainer, Map, MapControl, MapControlProps, Popup } from "react-leaflet";
 
 export interface ReactLeafletSearchProps extends MapControlProps {
   zoom?: number;
   search?: [number, number];
-  icon?: Icon;
   provider?: string;
   providerKey?: string;
+  inputPlaceholder?: string;
   markerIcon?: Icon;
+  showPopup?: boolean;
+  showMarker?: boolean;
+  popUp?: (SearchInfo: string) => Popup;
   leaflet?: {
     map?: Map;
     pane?: string;

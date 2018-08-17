@@ -31,10 +31,13 @@ export default class SimpleExample extends Component {
     }
   }
 
-  customPopup() {
+  customPopup(SearchInfo) {
     return(
       <Popup>
-        <span>I am a custom popup</span>
+        <div>
+          <p>I am a custom popUp</p>
+          <p>Info from search component: {SearchInfo}</p>
+        </div>
       </Popup>
     );
   }
@@ -49,7 +52,7 @@ export default class SimpleExample extends Component {
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
-          position="topright"
+          position="topleft"
           search={[56,7]}
           inputPlaceholder="Custom placeholder"
           showMarker={true}

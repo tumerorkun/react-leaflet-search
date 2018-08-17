@@ -61,10 +61,13 @@ const myIcon = L.icon({
 To change the Popup displayed by the marker, use the popUp prop:
 
 ```javascript
-myPopup() {
+myPopup(SearchInfo) {
   return(
     <Popup>
-      <span>I am a custom popup</span>
+      <div>
+        <p>I am a custom popUp</p>
+        <p>Info from search component: {SearchInfo}</p>
+      </div>
     </Popup>
   );
 }

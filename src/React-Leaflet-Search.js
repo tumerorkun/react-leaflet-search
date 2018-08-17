@@ -23,7 +23,8 @@ export default class ReactLeafletSearch extends MapControl {
             popupAnchor: [1, -34],
             tooltipAnchor: [16, -28],
             shadowSize: [41, 41]
-        })
+        });
+        this.SearchInfo = null; // searched lat,lng or response from provider
         this.map = context.map || props.leaflet.map;
     }
 
@@ -36,6 +37,7 @@ export default class ReactLeafletSearch extends MapControl {
     }
 
     latLngHandler(latLng, info) {
+        this.SearchInfo = info;
         const popUpStructure = (
             <div>
                 <p>{ Array.isArray(info) ? info.toString() : info }</p>
@@ -79,6 +81,8 @@ export default class ReactLeafletSearch extends MapControl {
 
     render() {
         this.markerRef = false;
+        const _ = this;
+        console.log(this.state)
         return this.state.search && this.props.showMarker ? (
             <Marker
                 ref={ref => (this.markerRef = ref)}
@@ -87,7 +91,7 @@ export default class ReactLeafletSearch extends MapControl {
                 position={[...this.state.search]}>
                 {
                   this.props.showPopup && (
-                    this.props.popUp ? this.props.popUp() : this.defaultPopUp()
+                    this.props.popUp ? this.props.popUp(this.SearchInfo) : this.defaultPopUp()
                   )
                 }
             </Marker>
