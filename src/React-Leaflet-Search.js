@@ -82,7 +82,6 @@ export default class ReactLeafletSearch extends MapControl {
     render() {
         this.markerRef = false;
         const _ = this;
-        console.log(this.state)
         return this.state.search && this.props.showMarker ? (
             <Marker
                 ref={ref => (this.markerRef = ref)}
