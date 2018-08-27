@@ -97,4 +97,6 @@ To search with global coordinates, the search input should start with the ':' ch
 
 ### You can play with the demo
 
-[DEMO](https://tumerorkun.github.io/react-leaflet-search)
+[DEMO](https://tumerorkun.github.io/react-leaflet-components-examples/)
+
+[React-Leaflet v2 Demo](https://tumerorkun.github.io/react-leaflet-v2-tests/)
