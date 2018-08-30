@@ -155,14 +155,9 @@ export default class InputBox extends React.Component {
         this.setMaxHeight();
         if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
             const Provider = Providers[this.props.provider];
-            if (this.props.providerKey) {
-                this.provider = new Provider({providerKey: this.props.providerKey, searchBounds: this.props.searchBounds});
-            } else {
-                this.provider = new Provider({searchBounds: this.props.searchBounds});
-            }
+            this.provider = new Provider(Object.assign({providerKey: this.props.providerKey, searchBounds: this.props.searchBounds}, this.props.providerOptions));
         } else {
-            const Provider = Providers.OpenStreetMap;
-            this.provider = new Provider({searchBounds: this.props.searchBounds});
+            throw new Error(`You set the provider prop to ${this.props.provider} but that isn't recognised. You can choose from ${Object.keys(Providers).join(", ")}`)
         }
         if (this.props.search &&
             Array.isArray(this.props.search) &&

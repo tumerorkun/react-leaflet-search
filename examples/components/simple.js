@@ -60,7 +60,7 @@ export default class SimpleExample extends Component {
           // closeResultsOnClick={false}
           openSearchOnLoad={true}
           searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
-
+          providerOptions={{region: 'gb'}}
 
 
           // default provider OpenStreetMap

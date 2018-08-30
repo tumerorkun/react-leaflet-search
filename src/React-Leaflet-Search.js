@@ -108,7 +108,10 @@ ReactLeafletSearch.propTypes = {
   popUp: PropTypes.func,
   closeResultsOnClick: PropTypes.bool,
   openSearchOnLoad: PropTypes.bool,
-  searchBounds: PropTypes.array
+  searchBounds: PropTypes.array,
+  region: PropTypes.string,
+  provider: PropTypes.string,
+  providerOptions: PropTypes.object
 };
 
 ReactLeafletSearch.defaultProps = {
@@ -117,5 +120,8 @@ ReactLeafletSearch.defaultProps = {
   showPopup: false,
   closeResultsOnClick: false,
   openSearchOnLoad: false,
-  searchBounds: []
+  searchBounds: [],
+  region: '',
+  provider: 'OpenStreetMap',
+  providerOptions: {}
 };

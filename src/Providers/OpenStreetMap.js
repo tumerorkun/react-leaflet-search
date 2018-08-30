@@ -1,13 +1,18 @@
 class OpenStreetMap {
-  constructor({ providerKey=null, searchBounds=[] } = {}) {
+  constructor(options = { providerKey: null, searchBounds: [] } ) {
+    let { providerKey, searchBounds} = options;
     //Bounds are expected to be a nested array of [[sw_lat, sw_lng],[ne_lat, ne_lng]].
     // We convert them into a string of 'x1,y1,x2,y2'
     let boundsUrlComponent = "";
+    let regionUrlComponent = "";
     if (searchBounds.length) {
       this.bounds = [].concat([],...searchBounds).join(",");
       boundsUrlComponent = `&viewbox=${this.bounds}`;
     }
-    this.url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&polygon_svg=1&namedetails=1${boundsUrlComponent}&q=`
+    if ('region' in options) {
+      regionUrlComponent = `&countrycodes=${options.region}`;
+    }
+    this.url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&polygon_svg=1&namedetails=1${boundsUrlComponent}${regionUrlComponent}&q=`;
   }
 
   async search(query) {
