@@ -46,7 +46,7 @@ export default class SimpleExample extends Component {
     return (
       <Map
           className="simpleMap"
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
           bounds={this.state.bounds}
           maxZoom={this.state.maxZoom}
           maxBounds={this.state.maxBounds}>

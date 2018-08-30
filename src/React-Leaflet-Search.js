@@ -11,6 +11,8 @@ export default class ReactLeafletSearch extends MapControl {
     constructor(props, context){
         super(props);
         this.div = DomUtil.create('div', 'leaflet-search-wrap');
+        L.DomEvent.disableClickPropagation(this.div);
+        L.DomEvent.disableScrollPropagation(this.div);
         this.state = {
             search: false,
             info: false,
