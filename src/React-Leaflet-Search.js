@@ -107,7 +107,8 @@ ReactLeafletSearch.propTypes = {
   showPopup: PropTypes.bool,
   popUp: PropTypes.func,
   closeResultsOnClick: PropTypes.bool,
-  openSearchOnLoad: PropTypes.bool
+  openSearchOnLoad: PropTypes.bool,
+  searchBounds: PropTypes.array
 };
 
 ReactLeafletSearch.defaultProps = {
@@ -115,5 +116,6 @@ ReactLeafletSearch.defaultProps = {
   showMarker: true,
   showPopup: false,
   closeResultsOnClick: false,
-  openSearchOnLoad: false
+  openSearchOnLoad: false,
+  searchBounds: []
 };

@@ -156,13 +156,13 @@ export default class InputBox extends React.Component {
         if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
             const Provider = Providers[this.props.provider];
             if (this.props.providerKey) {
-                this.provider = new Provider(this.props.providerKey);
+                this.provider = new Provider({providerKey: this.props.providerKey, searchBounds: this.props.searchBounds});
             } else {
-                this.provider = new Provider();
+                this.provider = new Provider({searchBounds: this.props.searchBounds});
             }
         } else {
             const Provider = Providers.OpenStreetMap;
-            this.provider = new Provider();
+            this.provider = new Provider({searchBounds: this.props.searchBounds});
         }
         if (this.props.search &&
             Array.isArray(this.props.search) &&

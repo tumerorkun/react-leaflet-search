@@ -58,7 +58,10 @@ export default class SimpleExample extends Component {
           showPopup={true}
           popUp={this.customPopup}
           // closeResultsOnClick={false}
-          // openSearchOnLoad={true}
+          openSearchOnLoad={true}
+          searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
+
+
 
           // default provider OpenStreetMap
           // provider="BingMap"

@@ -85,12 +85,17 @@ Other aspects can be customized as well:
   showPopup={false}
   openSearchOnLoad={false}
   closeResultsOnClick={false}
+  searchBounds={[]}
 />
 ```
 
 The `openSearchOnLoad` prop allows you to show the search bar instead of the search icon by default.
 
 The `closeResultsOnClick` prop will hide the results when you've clicked on one, which saves screen space on a dense map. Focussing on the search input will show the previous results again (without an extra search).
+
+The `searchBounds` prop takes an array of `[[x1,y1], [x2,y2]]` where these represent the `[sw,ne]` coordinates of the bounding box you want to prioritise search within. Note that in the case of OpenStreetmap at least, this doesn't explicitly exclude results outside the bounding box.  
+
+
 
 ## Info about search input
 It has two modes:
