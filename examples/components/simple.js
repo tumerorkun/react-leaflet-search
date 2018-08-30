@@ -59,8 +59,9 @@ export default class SimpleExample extends Component {
           popUp={this.customPopup}
           // closeResultsOnClick={false}
           openSearchOnLoad={true}
-          searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
-          providerOptions={{region: 'gb'}}
+          // these searchbounds would limit results to only London.
+          // searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
+          // providerOptions={{region: 'gb'}}
 
 
           // default provider OpenStreetMap
