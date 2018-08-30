@@ -15,13 +15,14 @@ export default class InputBox extends React.Component {
         super(props);
         this.input = null;
         this.state = {
-            open: false,
+            open: this.props.openSearchOnLoad,
             closeButton: false,
-            info: false,
+            info: false
         };
         this.provider = null;
         this.responseCache = {};
         this.inputEventHandler = asyncInputEvent(this.sendToAction.bind(this), this.syncInput.bind(this));
+        this.lastInfo = null;
     }
 
     inputMouseEnter(event) { this.lock = true; }
@@ -30,7 +31,14 @@ export default class InputBox extends React.Component {
     aMouseLeave(event) { this.lock = false; }
     aClick(event) { (this.state.open) ? this.closeSearch() : this.openSearch(); }
     inputBlur(event) { (this.input.value === '' && !this.lock) && this.closeSearch(); }
-    inputClick(event) { this.input.focus(); }
+    inputClick(event) {
+        this.input.focus();
+        if (this.lastInfo !== null) {
+            this.info = this.lastInfo;
+            this.lastInfo = null;
+            this.setState({info: true});
+        }
+    }
     inputInput(event) { this.inputEventHandler(event); }
     inputKeyUp(event) { (event.keyCode === 13) && this.beautifyValue(this.input.value); }
     closeClick(event) { this.closeSearch(); }
@@ -71,7 +79,7 @@ export default class InputBox extends React.Component {
         });
     }
     closeSearch() {
-        this.setState({ open: false, closeButton: false, info: false }, () => {
+        this.setState({ open: this.props.openSearchOnLoad, closeButton: false, info: false }, () => {
             this.input.value = '';
             this.info = '';
             this.props.removeMarker && this.props.removeMarker();
@@ -101,6 +109,7 @@ export default class InputBox extends React.Component {
     }
 
     hideInfo() {
+        this.lastInfo = this.info;
         this.info = '';
         this.setState({info: false});
     }
@@ -116,7 +125,7 @@ export default class InputBox extends React.Component {
                             (e ,i) => (<li
                                 key={`${e.name}-${i}`}
                                 className={`leaflet-search-control-info-li${(typeof activeIndex !== 'undefined') ? ((activeIndex === i)?' active':''):''}`}
-                                onClick={this.lisItemClick.bind(this, e, info, i)} >
+                                onClick={this.listItemClick.bind(this, e, info, i)} >
                                 <p>{e.name}</p>
                             </li>)
                         )
@@ -127,9 +136,12 @@ export default class InputBox extends React.Component {
         this.input.value && this.setState({info: true});
     }
 
-    lisItemClick(itemData, totalInfo, activeIndex, event) {
+    listItemClick(itemData, totalInfo, activeIndex, event) {
         this.showInfo(totalInfo, activeIndex);
         this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name);
+        if (this.props.closeResultsOnClick) {
+            this.hideInfo();
+        }
     }
 
     setMaxHeight() {

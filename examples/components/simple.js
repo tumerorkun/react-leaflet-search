@@ -52,12 +52,13 @@ export default class SimpleExample extends Component {
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
-          position="topleft"
-          search={[56,7]}
+          position="topright"
           inputPlaceholder="Custom placeholder"
           showMarker={true}
           showPopup={true}
           popUp={this.customPopup}
+          // closeResultsOnClick={false}
+          // openSearchOnLoad={true}
 
           // default provider OpenStreetMap
           // provider="BingMap"

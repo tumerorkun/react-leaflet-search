@@ -83,9 +83,14 @@ Other aspects can be customized as well:
   inputPlaceholder="The default text in the search bar"
   showMarker={true}
   showPopup={false}
+  openSearchOnLoad={false}
+  closeResultsOnClick={false}
 />
 ```
 
+The `openSearchOnLoad` prop allows you to show the search bar instead of the search icon by default.
+
+The `closeResultsOnClick` prop will hide the results when you've clicked on one, which saves screen space on a dense map. Focussing on the search input will show the previous results again (without an extra search).
 
 ## Info about search input
 It has two modes:

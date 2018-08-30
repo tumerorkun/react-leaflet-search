@@ -106,10 +106,14 @@ ReactLeafletSearch.propTypes = {
   showMarker: PropTypes.bool,
   showPopup: PropTypes.bool,
   popUp: PropTypes.func,
-}
+  closeResultsOnClick: PropTypes.bool,
+  openSearchOnLoad: PropTypes.bool
+};
 
 ReactLeafletSearch.defaultProps = {
   inputPlaceholder: "Search Lat,Lng",
   showMarker: true,
   showPopup: false,
-}
+  closeResultsOnClick: false,
+  openSearchOnLoad: false
+};
