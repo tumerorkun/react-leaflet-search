@@ -57,10 +57,10 @@ export default class SimpleExample extends Component {
           showMarker={true}
           showPopup={true}
           popUp={this.customPopup}
-          // closeResultsOnClick={false}
+          closeResultsOnClick={true}
           openSearchOnLoad={true}
           // these searchbounds would limit results to only London.
-          // searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
+          searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
           // providerOptions={{region: 'gb'}}
 
 

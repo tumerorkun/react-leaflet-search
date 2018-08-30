@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import './react-leaflet-search.css';
 import { Control, DomUtil, icon } from 'leaflet';
 import React from 'react';
@@ -30,9 +31,9 @@ export default class ReactLeafletSearch extends MapControl {
 
     createLeafletElement(props) {
         const ReactLeafletSearch = Control.extend({
-            onAdd: (map) => this.div,
-            onRemove: (map) =>  {}
-        })
+          onAdd: (map) => this.div,
+          onRemove: (map) =>  {}
+        });
         return new ReactLeafletSearch(props);
     }
 
