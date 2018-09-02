@@ -31,7 +31,9 @@ const searchComponent = props => (
 )
 ```
 
-The default provider is OpenStreetMap. If you want to use BingMap as a provider, it can be done as follows:
+### Search providers
+
+There are 2 search providers, but with scope for adding more.  The default provider is OpenStreetMap. If you want to use BingMap as a provider, it can be done as follows:
 ```javascript
 const searchComponent = props => (
   <ReactLeafletSearch
@@ -40,7 +42,18 @@ const searchComponent = props => (
             providerKey="{BINGMAP_KEY}" />
 )
 ```
-For now, react-leaflet-search only has two providers, but more will be added in the future.
+
+You can pass in provider-specific options using the providerOptions prop:
+```javascript
+const searchComponent = props => (
+  <ReactLeafletSearch
+            position="topleft"
+            provider="OpenStreetMap"
+            providerOptions={{region: 'gb'}} />
+)
+```
+
+### Search Result Marker
 
 To change the marker icon, use the markerIcon prop:
 ```javascript
@@ -74,7 +87,7 @@ myPopup(SearchInfo) {
 
 <ReactLeafletSearch position="topleft" popUp={ myPopup }/>
 ```
-
+### Other props which can be set on the `ReactLeafletSearch` component
 Other aspects can be customized as well:
 
 ```javascript
@@ -83,6 +96,9 @@ Other aspects can be customized as well:
   inputPlaceholder="The default text in the search bar"
   showMarker={true}
   showPopup={false}
+  openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
+  closeResultsOnClick={false} // By default, the search results remain when you click on one, and the map flies to the location of the result. But you might want to save space on your map by closing the results when one is clicked. The results are shown again (without another search) when focus is returned to the search input.
+  searchBounds={[]} // The BingMap and OpenStreetMap providers both accept bounding coordinates in [se,nw] format. Note that in the case of OpenStreetMap, this only weights the results and doesn't exclude things out of bounds.
 />
 ```
 

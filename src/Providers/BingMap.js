@@ -1,7 +1,15 @@
 class BingMap {
-  constructor(providerkey) {
-    this.key = providerkey;
-    this.url = `https://dev.virtualearth.net/REST/v1/Locations?output=json&key=${this.key}&q=`
+  constructor(options = { providerKey: null, searchBounds: [] } ) {
+    let { providerKey, searchBounds} = options;
+    this.key = providerKey;
+    //Bounds are expected to be a nested array of [[sw_lat, sw_lng],[ne_lat, ne_lng]].
+    // We convert them into a string of 'x1,y1,x2,y2'
+    let boundsUrlComponent = "";
+    if (searchBounds.length) {
+      this.bounds = [].concat([],...searchBounds).join(",");
+      boundsUrlComponent = `&umv=${this.bounds}`;
+    }
+    this.url = `https://dev.virtualearth.net/REST/v1/Locations?output=json${boundsUrlComponent}&key=${this.key}&q=`
   }
 
   async search(query) {

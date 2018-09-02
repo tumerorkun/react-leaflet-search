@@ -46,18 +46,23 @@ export default class SimpleExample extends Component {
     return (
       <Map
           className="simpleMap"
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
           bounds={this.state.bounds}
           maxZoom={this.state.maxZoom}
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
-          position="topleft"
-          search={[56,7]}
+          position="topright"
           inputPlaceholder="Custom placeholder"
           showMarker={true}
           showPopup={true}
           popUp={this.customPopup}
+          closeResultsOnClick={true}
+          openSearchOnLoad={true}
+          // these searchbounds would limit results to only London.
+          searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
+          // providerOptions={{region: 'gb'}}
+
 
           // default provider OpenStreetMap
           // provider="BingMap"

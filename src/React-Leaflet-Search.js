@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import './react-leaflet-search.css';
 import { Control, DomUtil, icon } from 'leaflet';
 import React from 'react';
@@ -10,6 +11,8 @@ export default class ReactLeafletSearch extends MapControl {
     constructor(props, context){
         super(props);
         this.div = DomUtil.create('div', 'leaflet-search-wrap');
+        L.DomEvent.disableClickPropagation(this.div);
+        L.DomEvent.disableScrollPropagation(this.div);
         this.state = {
             search: false,
             info: false,
@@ -30,9 +33,9 @@ export default class ReactLeafletSearch extends MapControl {
 
     createLeafletElement(props) {
         const ReactLeafletSearch = Control.extend({
-            onAdd: (map) => this.div,
-            onRemove: (map) =>  {}
-        })
+          onAdd: (map) => this.div,
+          onRemove: (map) =>  {}
+        });
         return new ReactLeafletSearch(props);
     }
 
@@ -106,10 +109,22 @@ ReactLeafletSearch.propTypes = {
   showMarker: PropTypes.bool,
   showPopup: PropTypes.bool,
   popUp: PropTypes.func,
-}
+  closeResultsOnClick: PropTypes.bool,
+  openSearchOnLoad: PropTypes.bool,
+  searchBounds: PropTypes.array,
+  region: PropTypes.string,
+  provider: PropTypes.string,
+  providerOptions: PropTypes.object
+};
 
 ReactLeafletSearch.defaultProps = {
   inputPlaceholder: "Search Lat,Lng",
   showMarker: true,
   showPopup: false,
-}
+  closeResultsOnClick: false,
+  openSearchOnLoad: false,
+  searchBounds: [],
+  region: '',
+  provider: 'OpenStreetMap',
+  providerOptions: {}
+};

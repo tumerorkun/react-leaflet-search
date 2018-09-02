@@ -5,7 +5,10 @@
         {
           "targets": {
             "node": "current",
-            "browsers": ["last 2 Chrome versions"]
+            "browsers": [
+              "last 2 versions",
+              "ios 9"
+            ]
           },
           "modules": "commonjs",
           "loose": true
