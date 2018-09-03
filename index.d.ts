@@ -10,6 +10,10 @@ export interface ReactLeafletSearchProps extends MapControlProps {
   markerIcon?: Icon;
   showPopup?: boolean;
   showMarker?: boolean;
+  closeResultsOnClick?: boolean;
+  openSearchOnLoad?: boolean;
+  providerOptions?: { [key: string]: any };
+  searchBounds?: [[number, number], [number, number]];
   popUp?: (SearchInfo: string) => JSX.Element;
   leaflet?: {
     map?: Map;
