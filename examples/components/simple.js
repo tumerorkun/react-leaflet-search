@@ -36,7 +36,8 @@ export default class SimpleExample extends Component {
       <Popup>
         <div>
           <p>I am a custom popUp</p>
-          <p>Info from search component: {SearchInfo}</p>
+          <p>latitude and longitude from search component: {SearchInfo.latLng.toString().replace(',',' , ')}</p>
+          <p>Info from search component: {SearchInfo.info}</p>
         </div>
       </Popup>
     );
@@ -52,17 +53,25 @@ export default class SimpleExample extends Component {
           maxBounds={this.state.maxBounds}>
         <TileLayer noWrap={true} url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <ReactLeafletSearch
-          position="topright"
+          position="topleft"
           inputPlaceholder="Custom placeholder"
+          search = {
+            [33.100745405144245, 46.48315429687501]
+          }
           showMarker={true}
+          zoom={5}
           showPopup={true}
           popUp={this.customPopup}
           closeResultsOnClick={true}
           openSearchOnLoad={true}
-          // these searchbounds would limit results to only London.
-          searchBounds={[[51.24988,-0.55343],[51.72617,0.33233]]}
-          // providerOptions={{region: 'gb'}}
-
+          // // these searchbounds would limit results to only Turkey.
+          searchBounds = {
+            [
+              [33.100745405144245, 46.48315429687501],
+              [44.55916341529184, 24.510498046875]
+            ]
+          }
+          // providerOptions={{region: 'tr'}}
 
           // default provider OpenStreetMap
           // provider="BingMap"

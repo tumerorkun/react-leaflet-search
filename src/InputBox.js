@@ -33,7 +33,11 @@ export default class InputBox extends React.Component {
     inputBlur(event) { (this.input.value === '' && !this.lock) && this.closeSearch(); }
     inputClick(event) {
         this.input.focus();
-        if (this.lastInfo !== null) {
+        if (!this.input.value.startsWith(":") &&
+            this.lastInfo !== null &&
+            this.lastInfo !== '' &&
+            this.input.value !== ''
+        ) {
             this.info = this.lastInfo;
             this.lastInfo = null;
             this.setState({info: true});

@@ -40,7 +40,7 @@ export default class ReactLeafletSearch extends MapControl {
     }
 
     latLngHandler(latLng, info) {
-        this.SearchInfo = info;
+        this.SearchInfo = {info, latLng};
         const popUpStructure = (
             <div>
                 <p>{ Array.isArray(info) ? info.toString() : info }</p>
@@ -59,7 +59,7 @@ export default class ReactLeafletSearch extends MapControl {
             this.flyTo();
         });
     }
-    flyTo() { this.map.flyTo([...this.state.search], this.props.zoom || 10); }
+    flyTo() { this.map.flyTo([...this.state.search], this.props.zoom); }
 
     componentDidMount() {
         super.componentDidMount();
@@ -109,10 +109,11 @@ ReactLeafletSearch.propTypes = {
   showMarker: PropTypes.bool,
   showPopup: PropTypes.bool,
   popUp: PropTypes.func,
+  zoom: PropTypes.number,
+  search: PropTypes.arrayOf(PropTypes.number),
   closeResultsOnClick: PropTypes.bool,
   openSearchOnLoad: PropTypes.bool,
   searchBounds: PropTypes.array,
-  region: PropTypes.string,
   provider: PropTypes.string,
   providerOptions: PropTypes.object
 };
@@ -120,11 +121,12 @@ ReactLeafletSearch.propTypes = {
 ReactLeafletSearch.defaultProps = {
   inputPlaceholder: "Search Lat,Lng",
   showMarker: true,
-  showPopup: false,
+  showPopup: true,
+  zoom: 10,
+  search: [],
   closeResultsOnClick: false,
   openSearchOnLoad: false,
   searchBounds: [],
-  region: '',
   provider: 'OpenStreetMap',
   providerOptions: {}
 };

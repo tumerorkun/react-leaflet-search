@@ -31,7 +31,7 @@ const searchComponent = props => (
 )
 ```
 
-### Search providers
+### Search providers
 
 There are 2 search providers, but with scope for adding more.  The default provider is OpenStreetMap. If you want to use BingMap as a provider, it can be done as follows:
 ```javascript
@@ -79,7 +79,8 @@ myPopup(SearchInfo) {
     <Popup>
       <div>
         <p>I am a custom popUp</p>
-        <p>Info from search component: {SearchInfo}</p>
+        <p>latitude and longitude from search component: lat:{SearchInfo.latLng[0]} lng:{SearchInfo.latLng[1]}</p>
+        <p>Info from search component: {SearchInfo.info}</p>
       </div>
     </Popup>
   );
@@ -92,8 +93,10 @@ Other aspects can be customized as well:
 
 ```javascript
 <ReactLeafletSearch
-  position="topright"
+  position="topleft"
   inputPlaceholder="The default text in the search bar"
+  search={[]} // Setting this to [lat, lng] gives initial search input to the component and map flies to that coordinates, its like search from props not from user
+  zoom={7} // Default value is 10
   showMarker={true}
   showPopup={false}
   openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
