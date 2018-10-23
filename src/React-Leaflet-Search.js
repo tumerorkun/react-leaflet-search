@@ -59,7 +59,15 @@ export default class ReactLeafletSearch extends MapControl {
             this.flyTo();
         });
     }
-    flyTo() { this.map.flyTo([...this.state.search], this.props.zoom); }
+    flyTo() {
+        if (this.props.mapStateModifier === 'flyTo') {
+            this.map.flyTo([...this.state.search], this.props.zoom, this.props.zoomPanOptions);
+        } else if (this.props.mapStateModifier === 'setView') {
+            this.map.setView([...this.state.search], this.props.zoom, this.props.zoomPanOptions);
+        } else {
+            (typeof this.props.mapStateModifier === 'function') && this.props.mapStateModifier([...this.state.search]);
+        }
+    }
 
     componentDidMount() {
         super.componentDidMount();
@@ -102,31 +110,42 @@ export default class ReactLeafletSearch extends MapControl {
 }
 
 ReactLeafletSearch.propTypes = {
-  position: PropTypes.string.isRequired,
-  provider: PropTypes.string,
-  providerKey: PropTypes.string,
-  inputPlaceholder: PropTypes.string,
-  showMarker: PropTypes.bool,
-  showPopup: PropTypes.bool,
-  popUp: PropTypes.func,
-  zoom: PropTypes.number,
-  search: PropTypes.arrayOf(PropTypes.number),
-  closeResultsOnClick: PropTypes.bool,
-  openSearchOnLoad: PropTypes.bool,
-  searchBounds: PropTypes.array,
-  provider: PropTypes.string,
-  providerOptions: PropTypes.object
+    position: PropTypes.string.isRequired,
+    providerKey: PropTypes.string,
+    inputPlaceholder: PropTypes.string,
+    showMarker: PropTypes.bool,
+    showPopup: PropTypes.bool,
+    popUp: PropTypes.func,
+    zoom: PropTypes.number,
+    search: PropTypes.arrayOf(PropTypes.number),
+    closeResultsOnClick: PropTypes.bool,
+    openSearchOnLoad: PropTypes.bool,
+    searchBounds: PropTypes.array,
+    provider: PropTypes.string,
+    providerOptions: PropTypes.object,
+    zoomPanOptions: PropTypes.object,
+    mapStateModifier: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.string
+    ])
 };
 
 ReactLeafletSearch.defaultProps = {
-  inputPlaceholder: "Search Lat,Lng",
-  showMarker: true,
-  showPopup: true,
-  zoom: 10,
-  search: [],
-  closeResultsOnClick: false,
-  openSearchOnLoad: false,
-  searchBounds: [],
-  provider: 'OpenStreetMap',
-  providerOptions: {}
+    inputPlaceholder: "Search Lat,Lng",
+    showMarker: true,
+    showPopup: true,
+    zoom: 10,
+    search: [],
+    closeResultsOnClick: false,
+    openSearchOnLoad: false,
+    searchBounds: [],
+    provider: 'OpenStreetMap',
+    providerOptions: {},
+    mapStateModifier: 'flyTo',
+    zoomPanOptions: {
+        animate: true,
+        duration: 0.25,
+        easeLinearity: 0.25,
+        noMoveStart: false
+    }
 };

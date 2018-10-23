@@ -20,7 +20,14 @@ export interface ReactLeafletSearchProps extends MapControlProps {
     pane?: string;
     layerContainer?: LayerContainer;
     popupContainer?: Layer;
-  }
+  };
+  mapStateModifier?: ((arg:[number,number]) => any) | string;
+  zoomPanOptions?: {
+    animate?: boolean;
+    duration?: number;
+    easeLinearity?: number;
+    noMoveStart?: boolean;
+  };
 }
 
 export interface ReactLeafletSearchState {
