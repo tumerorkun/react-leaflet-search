@@ -1,3 +1,5 @@
+import { LatLngBounds, LatLng } from 'leaflet';
+
 class BingMap {
   constructor(options = { providerKey: null, searchBounds: [] } ) {
     let { providerKey, searchBounds} = options;
@@ -21,12 +23,12 @@ class BingMap {
   }
 
   formatResponse(response) {
-    // console.log(response)
+    console.log(response)
     const resources = response.resourceSets[0].resources;
     const count = response.resourceSets[0].estimatedTotal;
     // console.log(resources)
     const info = (count > 0) ? resources.map(e => ({
-      bounds: e.bbox.map(bound => Number(bound)),
+      bounds: new LatLngBounds(new LatLng(e.bbox[0], e.bbox[1]), new LatLng(e.bbox[2], e.bbox[3])),
       latitude: Number(e.point.coordinates[0]),
       longitude: Number(e.point.coordinates[1]),
       name: e.name,

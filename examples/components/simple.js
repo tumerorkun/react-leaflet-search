@@ -55,27 +55,23 @@ export default class SimpleExample extends Component {
         <ReactLeafletSearch
           position="topleft"
           inputPlaceholder="Custom placeholder"
-          search = {
-            [33.100745405144245, 46.48315429687501]
-          }
+  
           showMarker={true}
-          zoom={5}
           showPopup={true}
-          popUp={this.customPopup}
           closeResultsOnClick={true}
-          openSearchOnLoad={true}
-          // // these searchbounds would limit results to only Turkey.
-          searchBounds = {
-            [
-              [33.100745405144245, 46.48315429687501],
-              [44.55916341529184, 24.510498046875]
-            ]
-          }
+		  openSearchOnLoad={true}
+		  mapStateModifier="flyToBounds"
+		// these searchbounds would limit results to only Turkey.
+		//   searchBounds = {
+        //     [
+        //       [33.100745405144245, 46.48315429687501],
+        //       [44.55916341529184, 24.510498046875]
+        //     ]
+        //   }
           // providerOptions={{region: 'tr'}}
-
           // default provider OpenStreetMap
-          // provider="BingMap"
-          // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
+          provider="OpenStreetMap"
+          //providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
         />
       </Map>
     )

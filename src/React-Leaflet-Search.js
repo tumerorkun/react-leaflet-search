@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import './react-leaflet-search.css';
-import { Control, DomUtil, icon } from 'leaflet';
+import { Control, DomUtil, icon, LatLngBounds, LatLng } from 'leaflet';
 import React from 'react';
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
@@ -15,6 +15,7 @@ export default class ReactLeafletSearch extends MapControl {
         L.DomEvent.disableScrollPropagation(this.div);
         this.state = {
             search: false,
+            popup: false,
             info: false,
         };
         this.markerIcon = icon({
@@ -40,27 +41,30 @@ export default class ReactLeafletSearch extends MapControl {
     }
 
     latLngHandler(latLng, info) {
-        this.SearchInfo = {info, latLng};
+		this.SearchInfo = {info, latLng};
         const popUpStructure = (
             <div>
-                <p>{ Array.isArray(info) ? info.toString() : info }</p>
+                <p>{ Array.isArray(info) ? info.toString() : info.name }</p>
                 <div className='leaflet-search-popup'></div>
                 <div>{`latitude: ${latLng[0]}`}</div>
                 <div>{`longitude: ${latLng[1]}`}</div>
             </div>
         )
-        this.goToLatLng(latLng, popUpStructure);
+        this.goToLatLng(latLng, popUpStructure, info);
     }
 
     removeMarkerHandler() { this.setState({search: false}); }
 
-    goToLatLng(latLng, info) {
-        this.setState({ search: latLng, info: info }, () => {
+    goToLatLng(latLng, popup, info) {
+        this.setState({ search: latLng, popup: popup, info: info }, () => {
             this.flyTo();
         });
     }
+
     flyTo() {
-        if (this.props.mapStateModifier === 'flyTo') {
+        if (this.props.mapStateModifier === 'flyToBounds') {
+            this.map.flyToBounds(this.state.info.bounds);
+        } else if (this.props.mapStateModifier === 'flyTo') {
             this.map.flyTo([...this.state.search], this.props.zoom, this.props.zoomPanOptions);
         } else if (this.props.mapStateModifier === 'setView') {
             this.map.setView([...this.state.search], this.props.zoom, this.props.zoomPanOptions);
@@ -85,7 +89,7 @@ export default class ReactLeafletSearch extends MapControl {
     defaultPopUp() {
       return(
         <Popup>
-            <span>{this.state.info}</span>
+            <span>{this.state.popup}</span>
         </Popup>
       );
     }

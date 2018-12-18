@@ -1,3 +1,5 @@
+import { LatLngBounds, LatLng } from 'leaflet';
+
 class OpenStreetMap {
   constructor(options = { providerKey: null, searchBounds: [] } ) {
     let { providerKey, searchBounds} = options;
@@ -25,9 +27,10 @@ class OpenStreetMap {
 
   formatResponse(response) {
     const resources = response;
-    const count = response.length;
+	const count = response.length;
+	console.log(response);
     const info = (count > 0) ? resources.map(e => ({
-      bounds: e.boundingbox.map(bound => Number(bound)),
+	  bounds: new LatLngBounds(new LatLng(e.boundingbox[0], e.boundingbox[2]), new LatLng(e.boundingbox[1], e.boundingbox[3])),
       latitude: Number(e.lat),
       longitude: Number(e.lon),
       name: e.display_name,

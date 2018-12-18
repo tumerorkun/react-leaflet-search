@@ -142,7 +142,7 @@ export default class InputBox extends React.Component {
 
     listItemClick(itemData, totalInfo, activeIndex, event) {
         this.showInfo(totalInfo, activeIndex);
-        this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name);
+        this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData);
         if (this.props.closeResultsOnClick) {
             this.hideInfo();
         }
