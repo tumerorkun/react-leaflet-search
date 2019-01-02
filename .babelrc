@@ -1,20 +1,22 @@
 {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "node": "current",
-            "browsers": [
-              "last 2 versions",
-              "ios 9"
-            ]
-          },
-          "modules": "commonjs",
-          "loose": true
-        }
-      ],
-      "react"
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current",
+          "browsers": [
+            "last 2 versions",
+            "ios 9"
+          ]
+        },
+        "modules": "commonjs",
+        "loose": true
+      }
     ],
-    "plugins": ["transform-object-rest-spread"]
-  }
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
+}
