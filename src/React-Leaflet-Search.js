@@ -39,8 +39,9 @@ export default class ReactLeafletSearch extends MapControl {
         return new ReactLeafletSearch(props);
     }
 
-    latLngHandler(latLng, info) {
-        this.SearchInfo = {info, latLng};
+    latLngHandler(latLng, info, raw) {
+        // console.log(latLng, info, raw)
+        this.SearchInfo = {info, latLng, raw};
         const popUpStructure = (
             <div>
                 <p>{ Array.isArray(info) ? info.toString() : info }</p>
@@ -127,6 +128,11 @@ ReactLeafletSearch.propTypes = {
     mapStateModifier: PropTypes.oneOfType([
         PropTypes.func,
         PropTypes.string
+    ]),
+    customProvider: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.func,
+        PropTypes.object
     ])
 };
 
@@ -147,5 +153,6 @@ ReactLeafletSearch.defaultProps = {
         duration: 0.25,
         easeLinearity: 0.25,
         noMoveStart: false
-    }
+    },
+    customProvider: false
 };

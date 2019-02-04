@@ -52,7 +52,7 @@ export default class InputBox extends React.Component {
             // console.log(this.input.value, 'ASYNC', this);
             if (Object.prototype.hasOwnProperty.call(this.responseCache, this.input.value)) {
                 // console.log('from cache');
-                this.showInfo(this.responseCache[this.input.value].info);
+                this.showInfo(this.responseCache[this.input.value].info, this.responseCache[this.input.value].raw);
             } else {
                 if (this.input.value.length >= 3) {
                     // console.log('fetching');
@@ -61,7 +61,7 @@ export default class InputBox extends React.Component {
                     if (response.error) { console.error(response.error); return false; }
                     // console.log(response);
                     this.responseCache[this.input.value] = response;
-                    this.showInfo(response.info);
+                    this.showInfo(response.info, response.raw);
                 }
             }
         }
@@ -117,7 +117,8 @@ export default class InputBox extends React.Component {
         this.info = '';
         this.setState({info: false});
     }
-    showInfo(info, activeIndex) {
+    showInfo(info, raw, activeIndex) {
+        // console.log(raw)
         if (typeof info === 'string') {
             this.info = (<span className="leaflet-search-control-info-span">{info}</span>);
         }
@@ -129,7 +130,7 @@ export default class InputBox extends React.Component {
                             (e ,i) => (<li
                                 key={`${e.name}-${i}`}
                                 className={`leaflet-search-control-info-li${(typeof activeIndex !== 'undefined') ? ((activeIndex === i)?' active':''):''}`}
-                                onClick={this.listItemClick.bind(this, e, info, i)} >
+                                onClick={this.listItemClick.bind(this, e, info, raw, i)} >
                                 <p>{e.name}</p>
                             </li>)
                         )
@@ -140,9 +141,9 @@ export default class InputBox extends React.Component {
         this.input.value && this.setState({info: true});
     }
 
-    listItemClick(itemData, totalInfo, activeIndex, event) {
-        this.showInfo(totalInfo, activeIndex);
-        this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name);
+    listItemClick(itemData, totalInfo, raw, activeIndex, event) {
+        this.showInfo(totalInfo, raw, activeIndex);
+        this.props.latLngHandler([Number(itemData.latitude), Number(itemData.longitude)], itemData.name, raw[activeIndex]);
         if (this.props.closeResultsOnClick) {
             this.hideInfo();
         }
@@ -157,11 +158,15 @@ export default class InputBox extends React.Component {
 
     componentDidMount() {
         this.setMaxHeight();
-        if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
-            const Provider = Providers[this.props.provider];
-            this.provider = new Provider(Object.assign({providerKey: this.props.providerKey, searchBounds: this.props.searchBounds}, this.props.providerOptions));
+        if (this.props.customProvider) {
+            this.provider = this.props.customProvider;
         } else {
-            throw new Error(`You set the provider prop to ${this.props.provider} but that isn't recognised. You can choose from ${Object.keys(Providers).join(", ")}`)
+            if (this.props.provider && Object.keys(Providers).includes(this.props.provider)) {
+                const Provider = Providers[this.props.provider];
+                this.provider = new Provider(Object.assign({providerKey: this.props.providerKey, searchBounds: this.props.searchBounds}, this.props.providerOptions));
+            } else {
+                throw new Error(`You set the provider prop to ${this.props.provider} but that isn't recognised. You can choose from ${Object.keys(Providers).join(", ")}`)
+            }
         }
         if (this.props.search &&
             Array.isArray(this.props.search) &&
