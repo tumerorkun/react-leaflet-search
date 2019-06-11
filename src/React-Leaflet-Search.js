@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import './react-leaflet-search.css';
 import { Control, DomUtil, icon } from 'leaflet';
 import React from 'react';
