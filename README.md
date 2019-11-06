@@ -5,9 +5,9 @@ Both react-leaflet v1 and v2 are supported.
 
 With v2 you should wrap this component in the withLeaflet method
 ```javascript
-const wrappedZoomIndicator = withLeaflet(ReactLeafletZoomIndicator)
+const wrappedSearch = withLeaflet(ReactLeafletSearch)
 ```
-and then use a wrappedZoomIndicator component as child of the Map component.
+and then use a wrappedSearch component as child of the Map component.
 
 
 ## Install
