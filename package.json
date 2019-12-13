@@ -1,12 +1,11 @@
 {
     "name": "react-leaflet-search",
-    "version": "0.7.0",
+    "version": "1.0.0",
     "description": "React component for search lat lng on leaflet",
     "scripts": {
         "compile": "tsc -p .",
         "build": "rollup -c && tsc -p .",
-        "examples": "webpack-serve ./examples/webpack.config.js",
-        "npm:publish": "npm run babel && npm publish"
+        "npm:publish": "npm publish"
     },
     "keywords": [
         "react",
