@@ -31,7 +31,7 @@ const SearchInfoListItem = ({
 };
 
 const SearchInfoListCore = (
-    props: { list: string | Array<Item>; handler: (item: Item, list: Array<Item>, index: number) => void; tabIndex?: number;activeIndex?: number },
+    props: { list: string | Array<Item>; handler: (item: Item, list: Array<Item>, index: number) => void; tabIndex?: number; activeIndex?: number },
     ref: React.Ref<HTMLUListElement>
 ) => {
     const { handler, list, tabIndex, activeIndex } = props;
@@ -61,6 +61,8 @@ const SearchInfoListCore = (
         },
         [setCand, cand, list]
     );
+
+    React.useLayoutEffect(() => setCand(0), [list]);
 
     return Array.isArray(list) ? (
         <ul
