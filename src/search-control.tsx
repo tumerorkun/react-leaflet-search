@@ -298,7 +298,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                             e.keyCode === 40 && e.preventDefault();
                         }}
                         onKeyDown={(e) => {
-                            console.log(e.key, e.keyCode);
+                            // console.log(e.key, e.keyCode);
                             // ArrowDown 40
                             if (e.keyCode === 40) {
                                 e.preventDefault();
