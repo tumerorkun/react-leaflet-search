@@ -121,6 +121,33 @@ Other aspects can be customized as well:
 />
 ```
 
+### Styling Component
+
+you can add custom style
+```javascript
+<ReactLeafletSearch className="custom-style">
+```
+```css
+.custom-style {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  --icon-width: 26px;
+  --icon-height: 26px;
+  --active-height: 40px;
+  --close-button-max-size: 12px;
+  --icon-button-max-size: 18px;
+  --primary-color: #000000;
+  --secondary-color: rgba(141, 141, 141, 0.639);
+  --border-color: rgba(0,0,0,.2);
+  --border-size: 0px;
+  --main-background-color: #ffffff;
+  --background-color-candidate: #5a6673;
+  --background-color-hover: #5a6673b3;
+  --background-color-active: #50c3bd;
+  --svg-stroke-width: 5px;
+}
+```
+
+
 ## Info about search input
 
 It has two modes:
