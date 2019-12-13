@@ -2,5 +2,6 @@ node_modules
 examples
 docs
 dist
-webpack.config.js
-.babelrc
+tsconfig.json
+rollup.config.json
+.prettierrc.json
