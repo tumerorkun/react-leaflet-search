@@ -1,6 +1,6 @@
 {
     "name": "react-leaflet-search",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "React component for search lat lng on leaflet",
     "scripts": {
         "compile": "tsc -p .",
