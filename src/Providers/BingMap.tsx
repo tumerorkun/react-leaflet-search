@@ -10,14 +10,13 @@ class BingMap implements Provider<BingMapResponse> {
     key?: string | null;
     url: string;
 
-    constructor(options: ProviderOptions) {
-        const { providerKey, searchBounds } = options;
-        this.key = providerKey;
+    constructor(options?: ProviderOptions) {
+        this.key = options?.providerKey;
         //Bounds are expected to be a nested array of [[sw_lat, sw_lng],[ne_lat, ne_lng]].
         // We convert them into a string of 'x1,y1,x2,y2'
         let boundsUrlComponent = "";
-        if (searchBounds && searchBounds.length) {
-            const bounds = searchBounds.reduce((acc: number[], b) => [...acc, b.lat, b.lng], []);
+        if (options?.searchBounds?.length) {
+            const bounds = options.searchBounds.reduce((acc: number[], b) => [...acc, b.lat, b.lng], []);
             boundsUrlComponent = `&umv=${bounds.join(",")}`;
         }
         this.url = `https://dev.virtualearth.net/REST/v1/Locations?output=json${boundsUrlComponent}&key=${this.key}&q=`;

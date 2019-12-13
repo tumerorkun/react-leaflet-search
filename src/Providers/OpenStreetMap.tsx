@@ -5,17 +5,16 @@ export type OpenStreetMapResponse = Array<{ boundingbox: string[]; lat: number; 
 class OpenStreetMap implements Provider<OpenStreetMapResponse> {
     url: string;
 
-    constructor(options: ProviderOptions) {
-        const { searchBounds } = options;
+    constructor(options?: ProviderOptions) {
         //Bounds are expected to be a nested array of [[sw_lat, sw_lng],[ne_lat, ne_lng]].
         // We convert them into a string of 'x1,y1,x2,y2' which is the opposite way around from lat/lng - it's lng/lat
         let boundsUrlComponent = "";
         let regionUrlComponent = "";
-        if (searchBounds && searchBounds.length) {
-            const reversedBounds = searchBounds.reduce((acc: number[], b) => [...acc, b.lng, b.lat], []);
+        if (options && options.searchBounds && options.searchBounds.length) {
+            const reversedBounds = options.searchBounds.reduce((acc: number[], b) => [...acc, b.lng, b.lat], []);
             boundsUrlComponent = `&bounded=1&viewbox=${reversedBounds.join(",")}`;
         }
-        if ("region" in options) {
+        if (options && "region" in options) {
             regionUrlComponent = `&countrycodes=${options.region}`;
         }
         this.url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&polygon_svg=1&namedetails=1${boundsUrlComponent}${regionUrlComponent}&q=`;

@@ -14,7 +14,7 @@ export interface BingMapResponse {
 declare class BingMap implements Provider<BingMapResponse> {
     key?: string | null;
     url: string;
-    constructor(options: ProviderOptions);
+    constructor(options?: ProviderOptions);
     search(query: string): Promise<{
         info: string;
         raw: BingMapResponse;

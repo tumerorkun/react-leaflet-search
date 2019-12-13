@@ -7,7 +7,7 @@ export declare type OpenStreetMapResponse = Array<{
 }>;
 declare class OpenStreetMap implements Provider<OpenStreetMapResponse> {
     url: string;
-    constructor(options: ProviderOptions);
+    constructor(options?: ProviderOptions);
     search(query: string): Promise<{
         info: string;
         raw: OpenStreetMapResponse;
