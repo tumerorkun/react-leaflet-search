@@ -58,7 +58,7 @@
     line-height: 30px;
     z-index: 0;
     cursor: pointer;
-    transition: height 0.1s linear 10s, border-top-right-radius 0s linear 0.1s, border-bottom-right-radius 0s linear 0.1s;
+    transition: height 0.1s linear 0s, border-top-right-radius 0s linear 0.1s, border-bottom-right-radius 0s linear 0.1s;
 }
 
 .search-control-input {
