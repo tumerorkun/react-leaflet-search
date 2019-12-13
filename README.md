@@ -4,10 +4,10 @@ A React component for searching places or global coordinates on leaflet
 
 Both react-leaflet v1 and v2 are supported.
 
-With v1 you should import this component from "react-leaflet-search/lib/Search-v2";
+With v1 you should import this component from "react-leaflet-search/lib/Search-v1";
 
 ```javascript
-import Search from "react-leaflet-search/lib/Search-v2";
+import Search from "react-leaflet-search/lib/Search-v1";
 ```
 
 default import is v2 supported (it uses withLeaflet wrapper internally)
