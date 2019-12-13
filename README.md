@@ -64,6 +64,27 @@ You can pass in provider-specific options using the providerOptions prop:
 const searchComponent = (props) => <ReactLeafletSearch position="topleft" provider="OpenStreetMap" providerOptions={{ region: "gb" }} />;
 ```
 
+to create a custom provider just create an Object
+```typescript
+const customProvider = {
+  search: async (inputValue: string) => {
+    // do fetch or anything
+    return {
+      info: Array<{
+                      bounds: boundingBox,
+                      latitude: number,
+                      longitude: number,
+                      name: displayName
+                  }> | string,
+      raw: rawResponse
+    }
+  }
+}
+```
+```javascript
+const component = <ReactLeafletSearch customProvider={customProvider} />
+```
+
 ### Search Result Marker
 
 To change the marker icon, use the markerIcon prop:
