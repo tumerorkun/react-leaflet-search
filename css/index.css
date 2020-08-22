@@ -1,18 +1,18 @@
 .search-control-wrap {
-    --icon-width: 26px !important;
-    --icon-height: 26px !important;
-    --active-height: 40px !important;
-    --close-button-max-size: 12px !important;
-    --icon-button-max-size: 18px !important;
-    --primary-color: #000000 !important;
-    --secondary-color: rgba(141, 141, 141, 0.639) !important;
-    --border-color: rgba(0, 0, 0, 0.2) !important;
-    --border-size: 0px !important;
-    --main-background-color: #ffffff !important;
-    --background-color-candidate: #5a6673 !important;
-    --background-color-hover: #5a6673b3 !important;
-    --background-color-active: #50c3bd !important;
-    --svg-stroke-width: 5px !important;
+    --icon-width: 26px;
+    --icon-height: 26px;
+    --active-height: 40px;
+    --close-button-max-size: 12px;
+    --icon-button-max-size: 18px;
+    --primary-color: #000000;
+    --secondary-color: rgba(141, 141, 141, 0.639);
+    --border-color: rgba(0, 0, 0, 0.2);
+    --border-size: 0px;
+    --main-background-color: #ffffff;
+    --background-color-candidate: #5a6673;
+    --background-color-hover: #5a6673b3;
+    --background-color-active: #50c3bd;
+    --svg-stroke-width: 5px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
     position: relative;
     z-index: 401;
@@ -39,7 +39,7 @@
     box-sizing: border-box;
     background-clip: padding-box;
     cursor: default;
-    border-radius: 3px;
+    border-radius: 4px;
     display: flex;
     z-index: 802;
     box-shadow: none !important;
@@ -53,7 +53,7 @@
     justify-content: center;
     align-items: center;
     outline: unset;
-    border-radius: 2px;
+    border-radius: 4px;
     border: 0 !important;
     height: var(--icon-height) !important;
     width: var(--icon-width);
@@ -150,6 +150,8 @@
     margin: 7px 0 0 0;
     overflow-y: auto;
     z-index: 9999;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    border-radius: 4px;
 }
 
 .search-control-info-wrapper-close {
@@ -163,7 +165,7 @@
     background-color: var(--main-background-color);
     padding: 0;
     border: var(--border-size) solid var(--border-color);
-    border-radius: 2px;
+    border-radius: 4px;
     text-align: center;
     overflow-y: auto;
     color: inherit;
@@ -200,12 +202,14 @@
 }
 .search-control-info-list-item {
     border-bottom: 1px solid var(--border-color);
-    font: normal 12px/20px Tahoma, Verdana, sans-serif;
+    font: normal 12px/16px Tahoma, Verdana, sans-serif;
+    display: block;
     list-style: none;
     cursor: pointer;
     padding: 5px;
-    align-items: center;
-    display: flex;
+    text-align: center;
+    /* align-items: center; */
+    /* display: flex; */
     color: inherit;
     white-space: pre-wrap;
 }
