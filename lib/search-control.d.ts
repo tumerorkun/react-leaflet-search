@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { BingMap, OpenStreetMap } from "./Providers";
 import PropTypes from "prop-types";
 import { Map as LeafletMap, LatLng } from "leaflet";
@@ -16,15 +16,12 @@ export interface SearchControlProps {
     search?: LatLng;
     openSearchOnLoad?: boolean;
     handler?: (obj: {
-        event: "add";
+        event: "add" | "remove";
         payload?: {
-            latlng: LatLng;
+            latLng: LatLng;
             info: string;
             raw: any;
         };
-    }) => any;
-    removeMarker?: (obj: {
-        event: "remove";
     }) => any;
     closeResultsOnClick?: boolean;
     inputPlaceholder?: string;
@@ -72,17 +69,17 @@ declare class SearchControl extends React.Component<SearchControlProps, SearchCo
     setLock: (value: boolean) => void;
     openSearch: () => void;
     closeSearch: () => void;
-    aClick: (e: React.SyntheticEvent<Element, Event>) => void;
-    inputBlur: (e: React.SyntheticEvent<Element, Event>) => void;
-    inputClick: (e: React.SyntheticEvent<Element, Event>) => void;
-    inputKeyUp: (e: React.KeyboardEvent<Element>) => void;
-    closeClick: (e: React.SyntheticEvent<Element, Event>) => void;
-    sendToAction: (e: React.SyntheticEvent<Element, Event>) => Promise<any>;
+    searchIconButtonOnClick: (e: React.SyntheticEvent) => void;
+    inputBlur: (e: React.SyntheticEvent) => void;
+    inputClick: (e: React.SyntheticEvent) => void;
+    inputKeyUp: (e: React.KeyboardEvent) => void;
+    closeClick: (e: React.SyntheticEvent) => void;
+    sendToAction: (e: React.SyntheticEvent) => Promise<any>;
     syncInput: () => void;
     beautifyValue(value: string): void;
     hideInfo(): void;
     showInfo(info: string | Array<ItemData>, activeIndex?: number): void;
-    listItemClick: (itemData: ItemData, totalInfo: ItemData[], activeIndex: number) => void;
+    listItemClick: (itemData: ItemData, totalInfo: Array<ItemData>, activeIndex: number) => void;
     setMaxHeight: () => void;
     componentDidMount(): void;
     componentDidUpdate(): void;

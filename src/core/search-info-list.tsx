@@ -8,7 +8,7 @@ const SearchInfoListItem = ({
     candidate,
     onClick,
     onKeyDown,
-    children
+    children,
 }: {
     value: number;
     className: string;
@@ -31,8 +31,13 @@ const SearchInfoListItem = ({
 };
 
 const SearchInfoListCore = (
-    props: { list: string | Array<Item>; handler: (item: Item, list: Array<Item>, index: number) => void; tabIndex?: number; activeIndex?: number },
-    ref: React.Ref<HTMLUListElement>
+    props: {
+        list: string | Array<Item>;
+        handler: (item: Item, list: Array<Item>, index: number) => void;
+        tabIndex?: number;
+        activeIndex?: number;
+    },
+    ref: React.Ref<HTMLUListElement>,
 ) => {
     const { handler, list, tabIndex, activeIndex } = props;
     const [cand, setCand] = React.useState(0);
@@ -59,7 +64,7 @@ const SearchInfoListCore = (
                 }
             }
         },
-        [setCand, cand, list]
+        [setCand, cand, list, handler],
     );
 
     React.useLayoutEffect(() => setCand(0), [list]);
@@ -76,7 +81,9 @@ const SearchInfoListCore = (
                     value={i}
                     candidate={cand}
                     key={`${item.name}-${i}`}
-                    className={`search-control-info-list-item${i === activeIndex || item.checked ? " active" : ""}${cand === i ? " candidate" : ""}`}
+                    className={`search-control-info-list-item${i === activeIndex || item.checked ? " active" : ""}${
+                        cand === i ? " candidate" : ""
+                    }`}
                     onClick={() => {
                         setCand(i);
                         handler(item, list, i);

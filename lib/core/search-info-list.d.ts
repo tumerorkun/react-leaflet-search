@@ -6,8 +6,8 @@ declare type Item = {
     checked?: boolean;
 };
 declare const SearchInfoList: React.ForwardRefExoticComponent<{
-    list: string | Item[];
-    handler: (item: Item, list: Item[], index: number) => void;
+    list: string | Array<Item>;
+    handler: (item: Item, list: Array<Item>, index: number) => void;
     tabIndex?: number | undefined;
     activeIndex?: number | undefined;
 } & React.RefAttributes<HTMLUListElement>>;

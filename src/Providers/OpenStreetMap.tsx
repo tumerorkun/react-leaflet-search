@@ -35,12 +35,12 @@ class OpenStreetMap implements Provider<OpenStreetMapResponse> {
                       bounds: e.boundingbox.map((bound) => Number(bound)),
                       latitude: Number(e.lat),
                       longitude: Number(e.lon),
-                      name: e.display_name
+                      name: e.display_name,
                   }))
                 : "Not Found";
         return {
             info: info as string,
-            raw: response as OpenStreetMapResponse
+            raw: response as OpenStreetMapResponse,
         };
     }
 }

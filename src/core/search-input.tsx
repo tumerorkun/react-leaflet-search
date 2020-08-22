@@ -43,8 +43,8 @@ const SearchInputCore = (
         onBlur = () => {},
         onKeyUp = () => {},
         onKeyDown = () => {},
-        onKeyPress = () => { },
-        onSubmit = () => { },
+        onKeyPress = () => {},
+        onSubmit = () => {},
         tabIndex = 0
     }: SearchInputProps,
     ref: React.Ref<HTMLInputElement>
@@ -74,7 +74,7 @@ const SearchInputCore = (
     );
     React.useLayoutEffect(() => {
         getInputValueSetter(setValue);
-    });
+    }, [setValue, getInputValueSetter]);
     return (
         <input
             tabIndex={tabIndex}

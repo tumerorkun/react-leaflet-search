@@ -1,11 +1,16 @@
-import { Control, DomUtil, DomEvent, icon, Icon, LatLng, Map, ZoomPanOptions, IconOptions, ControlOptions } from "leaflet";
+import { Control, DomUtil, DomEvent, Icon, LatLng, Map, ZoomPanOptions } from "leaflet";
 import React from "react";
 // import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { Popup, MapControl, Marker, LeafletContext, MapControlProps } from "react-leaflet";
 import { SearchControl, SearchControlProps } from "./search-control";
 
-type ReactLeafletSearchProps = MapControlProps &
+type SearchInfo = {
+    latLng: LatLng;
+    info: string | Array<string>;
+    raw: Record<string, unknown>;
+};
+export type ReactLeafletSearchProps = MapControlProps &
     SearchControlProps & {
         showMarker?: boolean;
         showPopup?: boolean;
@@ -15,6 +20,8 @@ type ReactLeafletSearchProps = MapControlProps &
         customProvider?: { search: (value: string) => Promise<any> };
         markerIcon?: Icon;
         popUp?: (i: { latLng: LatLng; info: string | Array<string>; raw: Object }) => JSX.Element;
+        children?: (info: SearchInfo) => JSX.Element | null;
+        onChange?: (info: SearchInfo) => void;
     };
 
 interface ReactLeafletSearchState {
@@ -24,13 +31,8 @@ interface ReactLeafletSearchState {
 
 export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchProps> {
     div: HTMLDivElement;
-    markerIcon: Icon<IconOptions>;
     map?: Map;
-    SearchInfo: {
-        latLng: LatLng;
-        info: string | Array<string>;
-        raw: Object;
-    } | null;
+    SearchInfo: SearchInfo | null;
     state: ReactLeafletSearchState;
     markerRef: React.RefObject<Marker>;
     constructor(props: ReactLeafletSearchProps, context: LeafletContext) {
@@ -42,16 +44,6 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
             search: false,
             info: false
         };
-        this.markerIcon = icon({
-            iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png",
-            iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png",
-            shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png",
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            tooltipAnchor: [16, -28],
-            shadowSize: [41, 41]
-        });
         this.SearchInfo = null; // searched lat,lng or response from provider
         this.map = context.map || props.leaflet?.map;
         this.markerRef = React.createRef();
@@ -65,15 +57,16 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
         return new ReactLeafletSearchControl(props);
     }
 
-    handler = ({ event, payload }: { event: "add" | "remove"; payload?: { latlng: LatLng; info: string; raw: any } }) => {
-        if (event === "add") {
-            payload && this.latLngHandler(payload.latlng, payload.info, payload.raw);
+    handler = ({ event, payload }: { event: "add" | "remove"; payload?: SearchInfo }) => {
+        if (event === "add" && payload) {
+            this.props.onChange?.(payload);
+            this.latLngHandler(payload.latLng, payload.info, payload.raw);
         } else {
-            this.removeMarkerHandler();
+            this.setState({ search: false });
         }
     };
 
-    latLngHandler(latLng: LatLng, info: string | Array<string>, raw: Object) {
+    latLngHandler(latLng: LatLng, info: string | Array<string>, raw: Record<string, unknown>) {
         this.SearchInfo = { info, latLng, raw };
         const popUpStructure = (
             <div>
@@ -84,10 +77,6 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
             </div>
         );
         this.goToLatLng(latLng, popUpStructure);
-    }
-
-    removeMarkerHandler() {
-        this.setState({ search: false });
     }
 
     goToLatLng(latLng: LatLng, info: JSX.Element) {
@@ -124,7 +113,6 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
                 search={this.props.search}
                 map={this.map}
                 handler={this.handler}
-                removeMarker={this.handler}
                 {...(this.props.tabIndex !== undefined ? { tabIndex: this.props.tabIndex } : {})}
             />,
             this.div
@@ -144,20 +132,24 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
     }
 
     render() {
-        return this.SearchInfo && this.state.search && this.props.showMarker ? (
-            <Marker
-                ref={this.markerRef}
-                icon={this.props.markerIcon || this.markerIcon}
-                key={`marker-search-${this.state.search.toString()}`}
-                position={this.state.search}
-            >
-                {this.props.showPopup && (this.props.popUp ? this.props.popUp(this.SearchInfo) : this.defaultPopUp())}
-            </Marker>
+        return this.SearchInfo && this.state.search ? (
+            this.props.children ? (
+                this.props.children(this.SearchInfo)
+            ) : this.props.showMarker ? (
+                <Marker
+                    ref={this.markerRef}
+                    key={`marker-search-${this.state.search.toString()}`}
+                    position={this.state.search}
+                    {...(this.props.markerIcon ? { icon: this.props.markerIcon } : {})}
+                >
+                    {this.props.showPopup && (this.props.popUp ? this.props.popUp(this.SearchInfo) : this.defaultPopUp())}
+                </Marker>
+            ) : null
         ) : null;
     }
 
     // static propTypes = {
-    //     position: PropTypes.string.isRequired,
+    //     position: PropTypes.oneOf(["topleft", "topright", "bottomleft", "bottomright"]).isRequired,
     //     providerKey: PropTypes.string,
     //     inputPlaceholder: PropTypes.string,
     //     showMarker: PropTypes.bool,
@@ -172,7 +164,7 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
     //     providerOptions: PropTypes.object,
     //     zoomPanOptions: PropTypes.object,
     //     mapStateModifier: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    //     customProvider: PropTypes.oneOfType([PropTypes.bool, PropTypes.func, PropTypes.object])
+    //     customProvider: PropTypes.oneOfType([PropTypes.object]),
     // };
     static defaultProps: ReactLeafletSearchProps = {
         inputPlaceholder: "Search Lat,Lng",
@@ -192,5 +184,3 @@ export default class ReactLeafletSearch extends MapControl<ReactLeafletSearchPro
         }
     };
 }
-
-export { ReactLeafletSearchProps };

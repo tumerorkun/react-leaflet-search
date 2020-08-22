@@ -12,4 +12,4 @@ interface Provider<ResponseType> {
     formatResponse(response: ResponseType): { info: string; raw: ResponseType } | { error: string };
 }
 
-export { Provider, ProviderOptions };
+export type { Provider, ProviderOptions };

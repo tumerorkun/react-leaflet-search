@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Providers from "./Providers";
 import { BingMap, OpenStreetMap } from "./Providers";
 import PropTypes from "prop-types";
@@ -20,20 +20,20 @@ export interface SearchControlProps {
     search?: LatLng;
     openSearchOnLoad?: boolean;
     handler?: (obj: {
-        event: "add";
+        event: "add" | "remove";
         payload?: {
-            latlng: LatLng;
+            latLng: LatLng;
             info: string;
             raw: any;
         };
     }) => any;
-    removeMarker?: (obj: { event: "remove" }) => any;
     closeResultsOnClick?: boolean;
     inputPlaceholder?: string;
     map?: LeafletMap;
     className?: string;
     tabIndex?: number;
 }
+
 interface SearchControlState {
     open: boolean | undefined;
     closeButton: boolean;
@@ -62,7 +62,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
         this.state = {
             open: this.props.openSearchOnLoad,
             closeButton: false,
-            showInfo: false
+            showInfo: false,
         };
         this.SearchResponseInfo = "";
         this.responseCache = {};
@@ -79,9 +79,9 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
             this.provider = new Provider(this.props.providerOptions);
         } else {
             throw new Error(
-                `You set the provider prop to ${this.props.provider} but that isn't recognised. You can choose from ${Object.keys(Providers).join(
-                    ", "
-                )}`
+                `You set the provider prop to ${
+                    this.props.provider
+                } but that isn't recognised. You can choose from ${Object.keys(Providers).join(", ")}`,
             );
         }
     }
@@ -94,7 +94,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
         closeResultsOnClick: PropTypes.bool,
         openSearchOnLoad: PropTypes.bool,
         searchBounds: PropTypes.array,
-        providerOptions: PropTypes.object
+        providerOptions: PropTypes.object,
     };
 
     static defaultProps: SearchControlProps = {
@@ -102,7 +102,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
         closeResultsOnClick: false,
         openSearchOnLoad: false,
         search: undefined,
-        provider: "OpenStreetMap"
+        provider: "OpenStreetMap",
     };
 
     setLock = (value: boolean) => {
@@ -118,11 +118,11 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
         this.setState({ open: this.props.openSearchOnLoad, closeButton: false, showInfo: false }, () => {
             this.inputValueSetter("");
             this.SearchResponseInfo = "";
-            this.props.removeMarker && this.props.removeMarker({ event: "remove" });
+            this.props.handler && this.props.handler({ event: "remove" });
         });
     };
 
-    aClick = (e: React.SyntheticEvent) => {
+    searchIconButtonOnClick = (e: React.SyntheticEvent) => {
         e.preventDefault();
         e.stopPropagation();
         this.state.open ? this.closeSearch() : this.openSearch();
@@ -132,7 +132,12 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
     };
     inputClick = (e: React.SyntheticEvent) => {
         this.input.current?.focus();
-        if (!this.input.current?.value.startsWith(":") && this.lastInfo !== null && this.lastInfo !== "" && this.input.current?.value !== "") {
+        if (
+            !this.input.current?.value.startsWith(":") &&
+            this.lastInfo !== null &&
+            this.lastInfo !== "" &&
+            this.input.current?.value !== ""
+        ) {
             this.SearchResponseInfo = this.lastInfo;
             this.lastInfo = null;
             this.setState({ showInfo: true });
@@ -152,12 +157,12 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
             } else {
                 if (this.input.current!.value.length >= 3) {
                     this.showInfo("Searching...");
-                    const response = await this.provider.search(this.input.current!.value);
+                    const searchValue = this.input.current!.value;
+                    const response = await this.provider.search(searchValue);
                     if ((response as { error: string }).error) {
-                        // log.error`(response as { error: string }).error`;
                         return false;
                     }
-                    this.responseCache[this.input.current!.value] = response;
+                    this.responseCache[searchValue] = response;
                     this.showInfo((response as { info: string }).info);
                 }
             }
@@ -165,7 +170,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
     };
     syncInput = () => {
         !this.state.closeButton && this.setState({ closeButton: true });
-        if (this.input.current?.value == "") {
+        if (this.input.current?.value === "") {
             this.hideInfo();
             this.state.closeButton && this.setState({ closeButton: false });
         }
@@ -188,10 +193,10 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                     this.props.handler({
                         event: "add",
                         payload: {
-                            latlng: new LatLng(Number(latLng[0]), Number(latLng[1])),
+                            latLng: new LatLng(Number(latLng[0]), Number(latLng[1])),
                             info: latLng.join(","),
-                            raw: latLng.join(",")
-                        }
+                            raw: latLng.join(","),
+                        },
                     });
             }
         } else {
@@ -227,10 +232,10 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
             this.props.handler({
                 event: "add",
                 payload: {
-                    latlng: new LatLng(Number(itemData.latitude), Number(itemData.longitude)),
+                    latLng: new LatLng(Number(itemData.latitude), Number(itemData.longitude)),
                     info: itemData.name,
-                    raw: this.responseCache[this.input.current!.value]
-                }
+                    raw: this.responseCache[this.input.current!.value].raw,
+                },
             });
         if (this.props.closeResultsOnClick) {
             this.hideInfo();
@@ -238,7 +243,9 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
     };
 
     setMaxHeight = () => {
-        const containerRect = this.props.map ? this.props.map.getContainer().getBoundingClientRect() : document.body.getBoundingClientRect();
+        const containerRect = this.props.map
+            ? this.props.map.getContainer().getBoundingClientRect()
+            : document.body.getBoundingClientRect();
         const divRect = this.input.current!.getBoundingClientRect();
         const maxHeight = `${Math.floor((containerRect.bottom - divRect.bottom - 10) * 0.6)}px`;
         this.selectbox.current && this.selectbox.current.style && (this.selectbox.current.style.maxHeight = maxHeight);
@@ -255,10 +262,10 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                 this.props.handler({
                     event: "add",
                     payload: {
-                        latlng: new LatLng(Number(this.props.search.lat), Number(this.props.search.lng)),
+                        latLng: new LatLng(Number(this.props.search.lat), Number(this.props.search.lng)),
                         info: inputValue,
-                        raw: this.props.search
-                    }
+                        raw: this.props.search,
+                    },
                 });
         }
     }
@@ -276,7 +283,7 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                 <section className={`search-control${this.state.open ? " search-control-active" : ""}`}>
                     <SearchIconButton
                         className="search-control-icon-button"
-                        onClick={this.aClick}
+                        onClick={this.searchIconButtonOnClick}
                         onMouseEnter={() => this.setLock(true)}
                         onMouseLeave={() => this.setLock(false)}
                     />
@@ -298,7 +305,6 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                             e.keyCode === 40 && e.preventDefault();
                         }}
                         onKeyDown={(e) => {
-                            // console.log(e.key, e.keyCode);
                             // ArrowDown 40
                             if (e.keyCode === 40) {
                                 e.preventDefault();
@@ -309,9 +315,16 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
                         }}
                         onSubmit={(e) => e.preventDefault()}
                     />
-                    <SearchCloseButton className={this.state.closeButton ? " search-control-close-button-active" : ""} onClick={this.closeClick} />
+                    <SearchCloseButton
+                        className={this.state.closeButton ? " search-control-close-button-active" : ""}
+                        onClick={this.closeClick}
+                    />
                 </section>
-                <section className={`search-control-info-wrapper${this.state.showInfo ? "" : " search-control-info-wrapper-close"}`}>
+                <section
+                    className={`search-control-info-wrapper${
+                        this.state.showInfo ? "" : " search-control-info-wrapper-close"
+                    }`}
+                >
                     <section ref={this.div} className={`search-control-info`}>
                         {this.state.showInfo && this.SearchResponseInfo}
                     </section>
