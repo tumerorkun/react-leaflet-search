@@ -13,6 +13,10 @@
         "search"
     ],
     "author": "Orkun Tumer",
+    "funding": {
+        "type": "patreon",
+        "url": "https://www.patreon.com/tumerorkun"
+    },
     "license": "MIT",
     "main": "cjs/v2/index.js",
     "module": "lib/index.js",
