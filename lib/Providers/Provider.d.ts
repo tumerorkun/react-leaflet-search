@@ -19,4 +19,4 @@ interface Provider<ResponseType> {
         error: string;
     };
 }
-export type { Provider, ProviderOptions };
+export { Provider, ProviderOptions };
