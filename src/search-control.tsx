@@ -147,6 +147,9 @@ class SearchControl extends React.Component<SearchControlProps, SearchControlSta
         e.keyCode === 13 && this.beautifyValue(this.input.current!.value);
     };
     closeClick = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         this.closeSearch();
     };
 
