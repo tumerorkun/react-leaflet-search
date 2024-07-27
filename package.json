@@ -28,8 +28,8 @@
     "peerDependencies": {
         "leaflet": "^1.6.0",
         "prop-types": "^15.7.2",
-        "react": "^16.12.0",
-        "react-leaflet": "^2.6.0"
+         "react": "^16.12.0 || ^17.0.0 || ^18.0.0",
+    "react-leaflet": "^2.6.0 || ^3.0.0 || ^4.0.0"
     },
     "devDependencies": {
         "@types/leaflet": "^1.5.6",
